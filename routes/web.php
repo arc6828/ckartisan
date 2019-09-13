@@ -23,3 +23,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'HomeController@index')->name('home');
+
+
+Route::get('/fastwork/intro', function () {
+    return view('fastwork/intro');
+});
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('fastwork', 'FastworkController');
+});
+
+Route::resource('project', 'ProjectController');
+Route::resource('project', 'ProjectController');
