@@ -47,9 +47,9 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <h4>
+                                            <h5>
                                                 <a href="{{ url('/') }}/fastwork/{{ $item->id }}">{{ $item->title }}</a>
-                                            </h4>
+                                            </h5>
                                             <div>
                                               <a href="{{ url('/') }}/project/{{ $item->project_id }}">{{ $item->project->title }}</a>
                                               by
@@ -59,7 +59,7 @@
                                             <div>
                                               <a class="" href="{{ url('/fastwork/' . $item->id . '/edit') }}" title="Edit Fastwork">
                                                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                              </a>                                          
+                                              </a>
                                             </div>
 
                                         </td>
