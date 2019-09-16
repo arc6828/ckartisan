@@ -30,14 +30,16 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Title</th><th>Content</th><th>Begin Date</th><th>Deadline</th><th>Complete Date</th><th>User Id</th><th>Remark</th><th>Photo</th><th>Actions</th>
+                                        <th>#</th><th>Title</th><th>Content</th><th>Begin Date</th><th>Deadline</th><th>Complete Date</th><th>Owner</th><th>Remark</th><th>Photo</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($project as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->title }}</td><td>{{ $item->content }}</td><td>{{ $item->begin_date }}</td><td>{{ $item->deadline }}</td><td>{{ $item->complete_date }}</td><td>{{ $item->user_id }}</td><td>{{ $item->remark }}</td><td>{{ $item->photo }}</td>
+                                        <td>{{ $item->title }}</td><td>{{ $item->content }}</td><td>{{ $item->begin_date }}</td><td>{{ $item->deadline }}</td><td>{{ $item->complete_date }}</td>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ $item->remark }}</td><td>{{ $item->photo }}</td>
                                         <td>
                                             <a href="{{ url('/project/' . $item->id) }}" title="View Project"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/project/' . $item->id . '/edit') }}" title="Edit Project"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
