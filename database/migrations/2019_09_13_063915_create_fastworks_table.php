@@ -21,7 +21,7 @@ class CreateFastworksTable extends Migration
             $table->timestamp('reserve_date')->nullable();
             $table->timestamp('accept_date')->nullable();
             $table->timestamp('complete_date')->nullable();
-            $table->integer0('developer_id')->nullable();
+            $table->integer('developer_id')->nullable();
             $table->integer('project_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->text('remark')->nullable();
