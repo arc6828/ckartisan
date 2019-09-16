@@ -29,12 +29,16 @@ class Fastwork extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'user_id');
+    }
+    public function developer()
+    {
+        return $this->belongsTo('App\User', 'developer_id');
     }
 
     public function project()
     {
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo('App\Project','project_id');
     }
 
 }

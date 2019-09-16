@@ -66,7 +66,7 @@ class FastworkController extends Controller
         $requestData = $request->all();
                 if ($request->hasFile('photo')) {
             $requestData['photo'] = $request->file('photo')
-                ->store('uploads', 'public');
+                ->store('uploads/fastwork', 'public');
         }
 
         Fastwork::create($requestData);
@@ -116,7 +116,7 @@ class FastworkController extends Controller
         $requestData = $request->all();
                 if ($request->hasFile('photo')) {
             $requestData['photo'] = $request->file('photo')
-                ->store('uploads', 'public');
+                ->store('uploads/fastwork', 'public');
         }
 
         $fastwork = Fastwork::findOrFail($id);

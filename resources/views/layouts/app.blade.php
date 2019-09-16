@@ -19,6 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ url('/') }}/images/logo.png" class="js-favicon">
+    <script src="https://kit.fontawesome.com/d59a8a2721.js"></script>
 </head>
 <body>
     <div id="app">

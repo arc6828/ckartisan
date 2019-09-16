@@ -42,18 +42,26 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <a href="{{ url('/') }}/storage/{{ $item->photo }}" target="_blank">
-                                                <img src="{{ url('/') }}/storage/{{ $item->photo }}" width="100">
+                                            <a href="{{ url('/') }}/storage/{{ isset($item->photo) ? $item->photo : '../images/noimage.png' }}" target="_blank">
+                                                <img src="{{ url('/') }}/storage/{{ isset($item->photo) ? $item->photo : '../images/noimage.png' }}" width="100">
                                             </a>
                                         </td>
                                         <td>
-                                            <h5>{{ $item->title }}</h5>
+                                            <h4>
+                                                <a href="{{ url('/') }}/fastwork/{{ $item->id }}">{{ $item->title }}</a>
+                                            </h4>
                                             <div>
                                               <a href="{{ url('/') }}/project/{{ $item->project_id }}">{{ $item->project->title }}</a>
                                               by
                                               <a href="{{ url('/') }}/user/{{ $item->user_id }}">{{ $item->user->name }}</a>
                                             </div>
                                             <div>Dealine  : {{ $item->deadline }}</div>
+                                            <div>
+                                              <a class="" href="{{ url('/fastwork/' . $item->id . '/edit') }}" title="Edit Fastwork">
+                                                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                              </a>                                          
+                                            </div>
+
                                         </td>
                                         <td>
                                           @if( isset($item->complete_date) )
@@ -69,14 +77,29 @@
                                           <div><span class="badge badge-primary">Created at</span></div>
                                           <div>{{ $item->created_at }}</div>
                                           @endif
-
                                         </td>
-                                        <td>{{ $item->developer_id }}</td>
                                         <td>
-                                            <a href="{{ url('/fastwork/' . $item->id) }}" title="View Fastwork"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/fastwork/' . $item->id . '/edit') }}" title="Edit Fastwork"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
+                                          @if( isset($item->developer_id) )
+                                            <a href="{{ url('/') }}/user/{{ $item->developer_id }}">{{ $item->developer->name }}</a>
+                                          @else
+                                            {{ $item->developer_id }}
+                                          @endif
+                                        </td>
+                                        <td>
                                             <form method="POST" action="{{ url('/fastwork' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
+                                                {{ method_field('PUT') }}
+                                                {{ csrf_field() }}
+                                                @if( !isset($item->reserve_date) )
+                                                <input type="hidden" name="reserve_date" value="{{ date('Y-m-d H:i:s')  }}">
+                                                <input type="hidden" name="developer_id" value="{{ Auth::id() }}">
+                                                <button type="submit" class="btn btn-info btn-sm" title="Delete Fastwork"><i class="fa fa-trash-o" aria-hidden="true"></i> จอง</button>
+                                                @endif
+                                            </form>
+
+
+                                            <a class="d-none" href="{{ url('/fastwork/' . $item->id) }}" title="View Fastwork"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+
+                                            <form class="d-none" method="POST" action="{{ url('/fastwork' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Delete Fastwork" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
