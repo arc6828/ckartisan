@@ -92,7 +92,7 @@
                                                 @if( !isset($item->reserve_date) )
                                                 <input type="hidden" name="reserve_date" value="{{ date('Y-m-d H:i:s')  }}">
                                                 <input type="hidden" name="developer_id" value="{{ Auth::id() }}">
-                                                <button type="submit" class="btn btn-warning btn-sm" title="Delete Fastwork"><i class="fa fa-trash-o" aria-hidden="true"></i> จอง</button>
+                                                <button type="submit" class="btn btn-warning btn-sm" title="Delete Fastwork"><i class="fa fa-calendar-plus" aria-hidden="true"></i> จอง</button>
                                                 @endif
                                             </form>
 
