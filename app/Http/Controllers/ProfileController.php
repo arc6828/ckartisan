@@ -104,11 +104,11 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $user_id = Auth::id();
         $requestData = $request->all();
                 if ($request->hasFile('photo')) {
             $requestData['photo'] = $request->file('photo')
-                ->store("uploads/{Auth::id()}", 'public');
+                ->store("uploads/u$user_id", 'public');
         }
 
         $profile = Profile::findOrFail($id);

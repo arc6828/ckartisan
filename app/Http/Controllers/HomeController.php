@@ -26,8 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $profile = Profile::firstOrCreate(
-            ['user_id' => Auth::id()],
-            ['photo' => 'images/noimage.png']
+            ['user_id' => Auth::id()]
         );
         return view('profile/show',compact('profile') );
     }
