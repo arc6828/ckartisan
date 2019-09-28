@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Profile;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $profile = Profile::firstOrCreate(
+            ['user_id' => Auth::id()],
+            ['photo' => 'images/noimage.png']
+        );
+        return view('profile/show',compact('profile') );
     }
 }

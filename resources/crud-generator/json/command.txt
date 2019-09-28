@@ -1,4 +1,5 @@
 php artisan crud:generate Fastwork --fields_from_file="resources/crud-generator/json/fastwork.json"
 
-
 php artisan crud:generate Project --fields_from_file="resources/crud-generator/json/project.json"
+
+php artisan crud:generate Profile --fields_from_file="resources/crud-generator/json/profile.json"

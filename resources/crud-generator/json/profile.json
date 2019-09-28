@@ -1,0 +1,24 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "type": "string"
+        },
+        {
+            "name": "role",
+            "type": "string"
+        },
+        {
+            "name": "user_id",
+            "type": "integer"
+        },
+        {
+            "name": "photo",
+            "type": "file"
+        }
+    ]
+}
