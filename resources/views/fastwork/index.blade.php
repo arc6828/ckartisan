@@ -32,6 +32,7 @@
                                         <th>Job ID</th>
                                         <th>Photo</th>
                                         <th>Title</th>
+                                        <th>Hours</th>
                                         <th>Status</th>
                                         <th>Developer</th>
                                         <th>Actions</th>
@@ -62,6 +63,9 @@
                                               </a>
                                             </div>
 
+                                        </td>
+                                        <td  class="text-center">
+                                            {{ isset($item->hours)? $item->hours : "-" }}
                                         </td>
                                         <td>
                                           @if( isset($item->complete_date) )

@@ -14,4 +14,8 @@ class Profile extends Model
         return $this->belongsTo('App\User', 'user_id');       
     }
 
+    public function fastworks(){        
+        return $this->hasMany('App\Fastwork', 'developer_id', 'user_id');  
+    }
+
 }

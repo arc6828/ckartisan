@@ -13,24 +13,30 @@
     <input class="form-control" name="deadline" type="date" id="deadline" value="{{ isset($fastwork->deadline) ? $fastwork->deadline : ''}}" >
     {!! $errors->first('deadline', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('reserve_date') ? 'has-error' : ''}}">
+<div class="d-none form-group {{ $errors->has('reserve_date') ? 'has-error' : ''}}">
     <label for="reserve_date" class="control-label">{{ 'Reserve Date' }}</label>
-    <input class="form-control" name="reserve_date" type="datetime-local" id="reserve_date" value="{{ isset($fastwork->reserve_date) ? $fastwork->reserve_date : ''}}" >
+    <input class="form-control" name="reserve_date" type="datetime-local" id="reserve_date" value="{{ isset($fastwork->reserve_date) ? $fastwork->reserve_date : ''}}"  disabled>
     {!! $errors->first('reserve_date', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('accept_date') ? 'has-error' : ''}}">
+<div class="d-none form-group {{ $errors->has('accept_date') ? 'has-error' : ''}}">
     <label for="accept_date" class="control-label">{{ 'Accept Date' }}</label>
-    <input class="form-control" name="accept_date" type="datetime-local" id="accept_date" value="{{ isset($fastwork->accept_date) ? $fastwork->accept_date : ''}}" >
+    <input class="form-control" name="accept_date" type="datetime-local" id="accept_date" value="{{ isset($fastwork->accept_date) ? $fastwork->accept_date : ''}}"  disabled>
     {!! $errors->first('accept_date', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('complete_date') ? 'has-error' : ''}}">
+<div class="d-none form-group {{ $errors->has('complete_date') ? 'has-error' : ''}}">
     <label for="complete_date" class="control-label">{{ 'Complete Date' }}</label>
-    <input class="form-control" name="complete_date" type="datetime-local" id="complete_date" value="{{ isset($fastwork->complete_date) ? $fastwork->complete_date : ''}}" >
+    <input class="form-control" name="complete_date" type="datetime-local" id="complete_date" value="{{ isset($fastwork->complete_date) ? $fastwork->complete_date : ''}}" disabled>
     {!! $errors->first('complete_date', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group {{ $errors->has('hours') ? 'has-error' : ''}}">
+    <label for="hours" class="control-label">{{ 'Hours' }}</label>
+    <input class="form-control" name="hours" type="number" step="any" id="hours" value="{{ isset($fastwork->hours) ? $fastwork->hours : ''}}" >
+    {!! $errors->first('hours', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group {{ $errors->has('developer_id') ? 'has-error' : ''}}">
-    <label for="developer_id" class="control-label">{{ 'Developer Id' }}</label>
-    <input class="form-control" name="developer_id" type="text" id="developer_id" value="{{ isset($fastwork->developer_id) ? $fastwork->developer_id : ''}}" >
+    <label for="developer_id" class="control-label">{{ 'Developer' }}</label>
+    <input class="form-control" name="developer_name" type="text" id="developer_name" value="{{ isset($fastwork->developer->name) ? $fastwork->developer->name : ''}}" disabled>
+    <input class="form-control" name="developer_id" type="hidden" id="developer_id" value="{{ isset($fastwork->developer_id) ? $fastwork->developer_id : ''}}" disabled>
     {!! $errors->first('developer_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('project_id') ? 'has-error' : ''}}">

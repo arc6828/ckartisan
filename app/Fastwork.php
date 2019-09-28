@@ -25,7 +25,7 @@ class Fastwork extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'content', 'deadline', 'reserve_date', 'accept_date', 'complete_date', 'developer_id', 'project_id', 'user_id', 'remark', 'photo'];
+    protected $fillable = ['title', 'content', 'deadline', 'reserve_date', 'accept_date', 'complete_date', 'developer_id', 'project_id', 'user_id', 'remark', 'photo','hours'];
 
     public function user()
     {
