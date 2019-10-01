@@ -31,5 +31,10 @@ class Project extends Model
     {
         return $this->belongsTo('App\User');
     }
-    
+
+    public function fastworks()
+    {
+        return $this->hasMany('App\Fastwork','project_id')->orderBy('created_at', 'desc');
+    }
+
 }
