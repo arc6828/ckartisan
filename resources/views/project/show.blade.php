@@ -18,16 +18,24 @@
                             {{ csrf_field() }}
                             <button type="submit" class="btn btn-danger btn-sm" title="Delete Project" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                         </form>
-                        <br/>
-                        <br/>
+
+                        <div class="text-center my-4">
+                            @php
+                                $img = isset($project->photo) ? "/storage/{$project->photo}" :  "/images/noimage.png"
+                            @endphp
+                            <img src="{{ url($img) }}  " class="img-thumbnail" width="200px;" />
+                        </div>
 
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                    <tr>
+                                    <tr class="d-none">
                                         <th>ID</th><td>{{ $project->id }}</td>
                                     </tr>
-                                    <tr><th> Title </th><td> {{ $project->title }} </td></tr><tr><th> Content </th><td> {{ $project->content }} </td></tr><tr><th> Begin Date </th><td> {{ $project->begin_date }} </td></tr><tr><th> Deadline </th><td> {{ $project->deadline }} </td></tr><tr><th> Complete Date </th><td> {{ $project->complete_date }} </td></tr><tr><th> User Id </th><td> {{ $project->user_id }} </td></tr><tr><th> Remark </th><td> {{ $project->remark }} </td></tr><tr><th> Photo </th><td> {{ $project->photo }} </td></tr>
+                                    <tr><th> Title </th><td> {{ $project->title }} </td></tr><tr><th> Content </th><td> {{ $project->content }} </td></tr><tr><th> Begin Date </th><td> {{ $project->begin_date }} </td></tr><tr><th> Deadline </th><td> {{ $project->deadline }} </td></tr><tr><th> Complete Date </th><td> {{ $project->complete_date }} </td></tr>
+                                    <tr><th> Owner </th><td> {{ $project->user->name }} </td></tr>
+                                    <tr><th> Remark </th><td> {{ $project->remark }} </td></tr>
+                                    <tr class="d-none"><th> Photo </th><td> {{ $project->photo }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -36,7 +44,7 @@
                 </div>
 
                 <div class="card mt-4">
-                    <div class="card-header">Fastwork in the project</div>
+                    <div class="card-header"><h5>Fastwork in {{ $project->title}}</h5></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg">
@@ -52,6 +60,7 @@
 
 
                         </div>
+
                         <div class="table-responsive mt-4">
                                 <table class="table">
                                     <thead>
