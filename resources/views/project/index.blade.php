@@ -39,7 +39,7 @@
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td><img src="{{ url("/")."/storage/".(isset($item->photo)? $item->photo : "images/noimage.png") }}" width="100" /></td>
-                                        <td><a href="{{ url('/project/' . $item->id) }}">{{ $item->title }}</a></td>
+                                        <td><a href="{{ url('/project/' . $item->id) }}">{{ $item->title }} ({{ $item->type }})</a></td>
                                         <td>{{ $item->begin_date }}</td><td>{{ $item->deadline }}</td><td>{{ $item->complete_date }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td class="d-none">
