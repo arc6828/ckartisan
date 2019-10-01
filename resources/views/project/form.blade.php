@@ -34,6 +34,18 @@
     <textarea class="form-control" rows="5" name="remark" type="textarea" id="remark" >{{ isset($project->remark) ? $project->remark : ''}}</textarea>
     {!! $errors->first('remark', '<p class="help-block">:message</p>') !!}
 </div>
+
+<div class="form-group {{ $errors->has('type') ? 'has-error' : ''}}">
+    <label for="photo" class="control-label">{{ 'Type' }}</label>
+    <select class="form-control" name="type" id="type" >
+      @foreach(["part-time","volunteer"] as $type)
+        <option value="{{ $type }}" {{ (isset($project->type) && $project->type == $type) ? 'selected' : ''}}>
+          {{ $type }}
+        </option>
+      @endforeach
+    </select>
+    {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group {{ $errors->has('photo') ? 'has-error' : ''}}">
     <label for="photo" class="control-label">{{ 'Photo' }}</label>
     <input class="form-control" name="photo" type="file" id="photo" value="{{ isset($project->photo) ? $project->photo : ''}}" >

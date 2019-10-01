@@ -34,6 +34,7 @@
                                     </tr>
                                     <tr><th> Title </th><td> {{ $project->title }} </td></tr><tr><th> Content </th><td> {{ $project->content }} </td></tr><tr><th> Begin Date </th><td> {{ $project->begin_date }} </td></tr><tr><th> Deadline </th><td> {{ $project->deadline }} </td></tr><tr><th> Complete Date </th><td> {{ $project->complete_date }} </td></tr>
                                     <tr><th> Owner </th><td> {{ $project->user->name }} </td></tr>
+                                    <tr><th> Type </th><td> {{ $project->type }} </td></tr>
                                     <tr><th> Remark </th><td> {{ $project->remark }} </td></tr>
                                     <tr class="d-none"><th> Photo </th><td> {{ $project->photo }} </td></tr>
                                 </tbody>

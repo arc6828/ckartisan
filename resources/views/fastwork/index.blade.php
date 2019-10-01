@@ -49,7 +49,7 @@
                                         </td>
                                         <td>
                                             <h5>
-                                                <a href="{{ url('/') }}/fastwork/{{ $item->id }}">{{ $item->title }}</a>
+                                                <a href="{{ url('/') }}/fastwork/{{ $item->id }}">{{ $item->title }} ({{ $item->project->type }})</a>
                                             </h5>
                                             <div>
                                               <a href="{{ url('/') }}/project/{{ $item->project_id }}">{{ $item->project->title }}</a>
