@@ -54,7 +54,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
                 if ($request->hasFile('photo')) {
             $requestData['photo'] = $request->file('photo')
@@ -113,6 +113,9 @@ class ProfileController extends Controller
 
         $profile = Profile::findOrFail($id);
         $profile->update($requestData);
+
+        $user = User::findOrFail($profile->user_id);
+        $user->update($requestData);
 
         return redirect('home')->with('flash_message', 'Profile updated!');
 
