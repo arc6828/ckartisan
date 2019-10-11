@@ -163,7 +163,7 @@ class OcrController extends Controller
         //CONVERT to float
         $number = floatval($text);
         if($number){
-            //return $number;
+            return $number;
             //CONVERT to int
             $number = intval($number);
             if($number){
