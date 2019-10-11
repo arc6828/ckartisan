@@ -32,3 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('project', 'ProjectController');
     Route::resource('profile', 'ProfileController');
 });
+
+
+Route::get('/vision', function () {
+    return view('vision');
+});
