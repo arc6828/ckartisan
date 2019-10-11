@@ -34,6 +34,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/vision', function () {
-    return view('vision');
-});
+Route::resource('ocr', 'OcrController');
