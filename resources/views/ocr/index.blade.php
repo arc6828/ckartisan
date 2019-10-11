@@ -38,7 +38,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td><img src="{{ url('storage') }}/{{ $item->photo }}" width=100 /></td>
-                                        <td>{{ $item->title }}</td><td>{{ $item->content }}</td>
+                                        <td>{{ $item->title }}</td>
+                                        <td style="max-width:200px;">{{ $item->content }}</td>
                                         <td>
                                             <a href="{{ url('/ocr/' . $item->id) }}" title="View Ocr"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/ocr/' . $item->id . '/edit') }}" title="Edit Ocr"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

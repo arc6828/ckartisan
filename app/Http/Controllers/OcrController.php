@@ -146,7 +146,7 @@ class OcrController extends Controller
         }
         return [
             "title" => $title,
-            "content" => json_encode($description),
+            "content" => json_encode($description, JSON_UNESCAPED_UNICODE ),
         ];
         // fetch text from image //
         //print_r($description);    
