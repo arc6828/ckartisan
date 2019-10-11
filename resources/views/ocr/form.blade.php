@@ -4,12 +4,12 @@
     {!! $errors->first('photo', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
-    <label for="content" class="control-label">{{ 'Raw Data' }}</label>
+    <label for="content" class="control-label">{{ 'Extract Data' }}</label>
     <textarea class="form-control" rows="5" name="content" type="textarea" id="content" {{ $formMode === 'edit' ? '' : 'readonly' }}>{{ isset($ocr->content) ? $ocr->content : ''}}</textarea>
     {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('title') ? 'has-error' : ''}}">
-    <label for="title" class="control-label">{{ 'Predict Number' }}</label>
+    <label for="title" class="control-label">{{ 'Level' }}</label>
     <input class="form-control" name="title" type="text" id="title" value="{{ isset($ocr->title) ? $ocr->title : ''}}"  {{ $formMode === 'edit' ? '' : 'readonly' }}>
     {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
 </div>

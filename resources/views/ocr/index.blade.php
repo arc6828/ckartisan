@@ -30,7 +30,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Photo</th><th>Title</th><th>Content</th><th>Actions</th>
+                                        <th>#</th><th>Photo</th><th>Level</th><th>Extract Data</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
