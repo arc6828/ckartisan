@@ -104,7 +104,7 @@ class OcrController extends Controller
 
     function detect_text2($path)
     {
-        $key_path = storage_path('app/public/uploads/ocr/CKartisan-c6f07fc70d07.json');
+        $key_path = storage_path('../public/CKartisan-c6f07fc70d07.json');
         $vision = new VisionClient(['keyFile' => json_decode(file_get_contents($key_path), true)]); 
         
         $image = $vision->image(file_get_contents($path), 
