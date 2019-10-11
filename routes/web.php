@@ -11,6 +11,8 @@
 |
 */
 
+//PUBLIC ROUTES 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -19,20 +21,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/user/{id}', 'UserController@show');
-
-
-
 Route::get('/fastwork/intro', function () {
     return view('fastwork/intro');
 });
 
-
-
+//AUTHENTICATED ROUTES
 Route::middleware(['auth'])->group(function () {
     Route::resource('fastwork', 'FastworkController');
+    Route::get('/user/{id}', 'UserController@show');
+    Route::resource('project', 'ProjectController');
+    Route::resource('profile', 'ProfileController');
 });
-
-Route::resource('project', 'ProjectController');
-Route::resource('project', 'ProjectController');
-Route::resource('profile', 'ProfileController');
