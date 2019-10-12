@@ -30,7 +30,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Photo</th><th>Level</th><th>Extract Data</th><th>Actions</th>
+                                        <th>#</th><th>Photo</th><th>Datetime</th><th>Level</th><th>Extract Data</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,6 +38,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td><img src="{{ url('storage') }}/{{ $item->photo }}" width=100 /></td>
+                                        <td>{{ $item->created_at }}</td>
                                         <td>{{ $item->title }}</td>
                                         <td style="max-width:200px;">{{ $item->content }}</td>
                                         <td>
