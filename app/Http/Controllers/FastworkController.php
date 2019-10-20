@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Fastwork;
+use App\FastworkStatus;
 use App\Project;
 use Illuminate\Http\Request;
 
@@ -83,8 +84,39 @@ class FastworkController extends Controller
      */
     public function show($id)
     {
-        $fastwork = Fastwork::findOrFail($id);
+        $fastwork = Fastwork::findOrFail($id);    
+        
+        if($fastwork->created_at){
+            $fastwork->status = 'created';
+        }
+        if($fastwork->reserved_at){
+            $fastwork->status = 'reserved';
+        }
+        if($fastwork->completed_at){
+            $fastwork->status = 'completed';
+        }
+        if($fastwork->paid_at){
+            $fastwork->status = 'paid';
+        }
+        $fastwork->save();
 
+        /*
+        //CHECK CREATE EXIST
+        $fastwork_status = FastworkStatus::firstOrCreate(
+            ['fastwork_id' => $fastwork->id],
+            ['title' => 'created_at' , 'created_at' => $fastwork->created_at]
+        );
+        //CHCEK RESERVE EXIST
+        //echo isset($fastwork->reserve_date);
+        if(isset($fastwork->reserve_date)){
+            //echo 555;
+            $fastwork_status = FastworkStatus::firstOrCreate(
+                ['title' => 'reserved_at'],
+                ['fastwork_id' => $fastwork->id, 'created_at' => $fastwork->reserve_date]
+            );
+        }
+        */
+        
         return view('fastwork.show', compact('fastwork'));
     }
 

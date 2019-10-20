@@ -68,19 +68,24 @@
                                             {{ isset($item->hours)? $item->hours : "-" }}
                                         </td>
                                         <td>
-                                          @if( isset($item->complete_date) )
-                                          <div ><span class="badge badge-success">Completed at</span></div>
-                                          <div>{{ $item->complete_date }}</div>
-                                          @elseif( isset($item->accept_date) )
-                                          <div><span class="badge badge-info">Accepted at</span></div>
-                                          <div>{{ $item->accept_date }}</div>
-                                          @elseif( isset($item->reserve_date) )
-                                          <div><span class="badge badge-warning">Reserved at</span></div>
-                                          <div>{{ $item->reserve_date }}</div>
-                                          @else
-                                          <div><span class="badge badge-primary">Created at</span></div>
-                                          <div>{{ $item->created_at }}</div>
-                                          @endif
+                                            @switch($item->status)
+                                                @case("created")                                                     
+                                                    <div><span class="badge badge-primary">Created at</span></div>
+                                                    <div>{{ $item->created_at }}</div>
+                                                    @break
+                                                @case("reserved")                                                 
+                                                    <div><span class="badge badge-warning">Reserved at</span></div>
+                                                    <div>{{ $item->reserved_at }}</div> 
+                                                    @break
+                                                @case("completed")                                                    
+                                                    <div ><span class="badge badge-info">Completed at</span></div>
+                                                    <div>{{ $item->completed_at }}</div>
+                                                    @break
+                                                @case("paid")                                                     
+                                                    <div><span class="badge badge-sucess">Paid at</span></div>
+                                                    <div>{{ $item->paid_at }}</div>
+                                                    @break
+                                            @endswitch                                          
                                         </td>
                                         <td>
                                           @if( isset($item->developer_id) )
@@ -94,10 +99,27 @@
                                                 {{ method_field('PUT') }}
                                                 {{ csrf_field() }}
                                                 @if( !isset($item->reserve_date) )
-                                                <input type="hidden" name="reserve_date" value="{{ date('Y-m-d H:i:s')  }}">
-                                                <input type="hidden" name="developer_id" value="{{ Auth::id() }}">
-                                                <button type="submit" class="btn btn-warning btn-sm" title="Delete Fastwork"><i class="fa fa-calendar-plus" aria-hidden="true"></i> จอง</button>
+                                                
                                                 @endif
+                                                @switch($item->status)
+                                                    @case("created")                                                  
+                                                        <input type="hidden" name="reserved_at" value="{{ date('Y-m-d H:i:s')  }}">
+                                                        <input type="hidden" name="status" value="reserved">
+                                                        <input type="hidden" name="developer_id" value="{{ Auth::id() }}">
+                                                        <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-calendar-plus" aria-hidden="true"></i> จอง</button>
+                                                        @break
+                                                    @case("reserved") 
+                                                        <input type="hidden" name="completed_at" value="{{ date('Y-m-d H:i:s')  }}">
+                                                        <input type="hidden" name="status" value="completed">
+                                                        <input type="hidden" name="developer_id" value="{{ Auth::id() }}">
+                                                        <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-check" aria-hidden="true"></i> เสร็จแล้ว</button>
+                                                        @break
+                                                    @case("completed")
+                                                       
+                                                    @case("paid")                                                    
+                                                        
+                                                        @break
+                                                @endswitch
                                             </form>
 
 

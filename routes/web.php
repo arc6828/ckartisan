@@ -35,3 +35,4 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::resource('ocr', 'OcrController');
+Route::resource('fastwork-status', 'FastworkStatusController');

@@ -5,3 +5,5 @@ php artisan crud:generate Project --fields_from_file="resources/crud-generator/j
 php artisan crud:generate Profile --fields_from_file="resources/crud-generator/json/profile.json"
 
 php artisan crud:generate Ocr --fields_from_file="resources/crud-generator/json/ocr.json"
+
+php artisan crud:generate FastworkStatus --fields_from_file="resources/crud-generator/json/fastwork_status.json"
