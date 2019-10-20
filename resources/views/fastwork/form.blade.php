@@ -13,6 +13,7 @@
     <input class="form-control" name="deadline" type="date" id="deadline" value="{{ isset($fastwork->deadline) ? $fastwork->deadline : ''}}" >
     {!! $errors->first('deadline', '<p class="help-block">:message</p>') !!}
 </div>
+@if(false)
 <div class="d-none form-group {{ $errors->has('reserve_date') ? 'has-error' : ''}}">
     <label for="reserve_date" class="control-label">{{ 'Reserve Date' }}</label>
     <input class="form-control" name="reserve_date" type="datetime-local" id="reserve_date" value="{{ isset($fastwork->reserve_date) ? $fastwork->reserve_date : ''}}"  disabled>
@@ -28,6 +29,7 @@
     <input class="form-control" name="complete_date" type="datetime-local" id="complete_date" value="{{ isset($fastwork->complete_date) ? $fastwork->complete_date : ''}}" disabled>
     {!! $errors->first('complete_date', '<p class="help-block">:message</p>') !!}
 </div>
+@endif
 <div class="form-group {{ $errors->has('hours') ? 'has-error' : ''}}">
     <label for="hours" class="control-label">{{ 'Hours' }}</label>
     <input class="form-control" name="hours" type="number" step="any" id="hours" value="{{ isset($fastwork->hours) ? $fastwork->hours : ''}}" >

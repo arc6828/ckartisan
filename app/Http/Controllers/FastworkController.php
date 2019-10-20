@@ -69,6 +69,7 @@ class FastworkController extends Controller
             $requestData['photo'] = $request->file('photo')
                 ->store('uploads/fastwork', 'public');
         }
+        $requestData['status'] = "created";
 
         Fastwork::create($requestData);
 
@@ -149,6 +150,20 @@ class FastworkController extends Controller
                 if ($request->hasFile('photo')) {
             $requestData['photo'] = $request->file('photo')
                 ->store('uploads/fastwork', 'public');
+        }
+        
+        //$requestData['status'] = "created";
+        $status = $requestData['status'];
+        switch( $status ){
+            case "reserved" : 
+                $requestData['reserved_at'] = date('Y-m-d H:i:s');
+                break;
+            case "completed" : 
+                $requestData['completed_at'] = date('Y-m-d H:i:s');
+                break;
+            case "paid" : 
+                $requestData['paid_at'] = date('Y-m-d H:i:s');
+                break;
         }
 
         $fastwork = Fastwork::findOrFail($id);
