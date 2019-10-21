@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row  justify-content-center">
 
-
+            @include('admin.sidebar')
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header"><h5>Welcome, {{ $profile->user->name }} </h5></div>

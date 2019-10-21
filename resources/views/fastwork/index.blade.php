@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="row">
-
-            <div class="col-md-12">
+            @include('admin.sidebar')
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">Fastwork</div>
                     <div class="card-body">
@@ -34,7 +34,6 @@
                                         <th>Title</th>
                                         <th>Hours</th>
                                         <th>Status</th>
-                                        <th>Developer</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -85,18 +84,17 @@
                                                     <div><span class="badge badge-sucess">Paid at</span></div>
                                                     <div>{{ $item->paid_at }}</div>
                                                     @break
-                                            @endswitch                                          
-                                        </td>
-                                        <td>
-                                          @if( isset($item->developer_id) )
-                                            <a href="{{ url('/') }}/user/{{ $item->developer_id }}">{{ $item->developer->name }}</a>
-                                          @else
-                                            {{ $item->developer_id }}
-                                          @endif
-                                        </td>
+                                            @endswitch   
+                                            <div><strong>Developer : </strong></div>  
+                                            @if( isset($item->developer_id) )
+                                                <a href="{{ url('/') }}/user/{{ $item->developer_id }}">{{ $item->developer->name }}</a>
+                                            @else
+                                                {{ $item->developer_id }}
+                                            @endif                                     
+                                        </td>                                        
                                         <td>
                                             <form method="POST" action="{{ url('/fastwork' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('PUT') }}
+                                                {{ method_field('PATCH') }}
                                                 {{ csrf_field() }}
                                                 @if( !isset($item->reserve_date) )
                                                 

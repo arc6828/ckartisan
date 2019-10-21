@@ -1,0 +1,24 @@
+{
+    "fields": [        
+        {
+            "name": "totol",
+            "type": "float"
+        },
+        {
+            "name": "user_id",
+            "type": "integer"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        },
+        {
+            "name": "paid_at",
+            "type": "timestamp"
+        },
+        {
+            "name": "receipt",
+            "type": "file"
+        }
+    ]
+}

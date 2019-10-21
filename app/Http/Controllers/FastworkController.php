@@ -9,6 +9,7 @@ use App\Fastwork;
 use App\FastworkStatus;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FastworkController extends Controller
 {
@@ -26,9 +27,10 @@ class FastworkController extends Controller
             $fastwork = Fastwork::where('title', 'LIKE', "%$keyword%")
                 ->orWhere('content', 'LIKE', "%$keyword%")
                 ->orWhere('deadline', 'LIKE', "%$keyword%")
-                ->orWhere('reserve_date', 'LIKE', "%$keyword%")
-                ->orWhere('accept_date', 'LIKE', "%$keyword%")
-                ->orWhere('complete_date', 'LIKE', "%$keyword%")
+                ->orWhere('reserved_at', 'LIKE', "%$keyword%")
+                ->orWhere('paid_at', 'LIKE', "%$keyword%")
+                ->orWhere('completed_at', 'LIKE', "%$keyword%")
+                ->orWhere('status', 'LIKE', "%$keyword%")
                 ->orWhere('developer_id', 'LIKE', "%$keyword%")
                 ->orWhere('project_id', 'LIKE', "%$keyword%")
                 ->orWhere('user_id', 'LIKE', "%$keyword%")

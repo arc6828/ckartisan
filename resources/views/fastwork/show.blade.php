@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="row">
-
-            <div class="col-md-12">
+            @include('admin.sidebar')
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">Fastwork {{ $fastwork->id }}</div>
                     <div class="card-body">

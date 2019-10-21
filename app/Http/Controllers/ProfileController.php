@@ -57,9 +57,9 @@ class ProfileController extends Controller
     {
 
         $requestData = $request->all();
-                if ($request->hasFile('photo')) {
+        if ($request->hasFile('photo')) {
             $requestData['photo'] = $request->file('photo')
-                ->store('uploads', 'public');
+                ->store("uploads/$user_id", 'public');
         }
 
         Profile::create($requestData);
@@ -89,7 +89,12 @@ class ProfileController extends Controller
      * @return \Illuminate\View\View
      */
     public function edit($id)
-    {
+    {        
+        if(Auth::user()->profile->role != "admin" ){
+            if(Auth::id() != $id){
+                abort(404);
+            }
+        }
         $profile = Profile::findOrFail($id);
 
         return view('profile.edit', compact('profile'));
@@ -105,16 +110,19 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user_id = Auth::id();
-        $requestData = $request->all();
-                if ($request->hasFile('photo')) {
+        $requestData = $request->except('role');
+        if(Auth::user()->profile->role == "admin" ){
+            $requestData = $request->all();
+        }
+        if ($request->hasFile('photo')) {
             $requestData['photo'] = $request->file('photo')
-                ->store("uploads/u$user_id", 'public');
+                ->store("uploads/$user_id", 'public');
         }
 
         $profile = Profile::findOrFail($id);
         $profile->update($requestData);
-
+        
+        $user_id = Auth::id();
         $user = User::findOrFail($profile->user_id);
         $user->update($requestData);
 
