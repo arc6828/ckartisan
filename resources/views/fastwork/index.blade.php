@@ -69,7 +69,7 @@
                                         <td>
                                             @switch($item->status)
                                                 @case("created")                                                     
-                                                    <div><span class="badge badge-primary">Created at</span></div>
+                                                    <div><span class="badge badge-danger">Created at</span></div>
                                                     <div>{{ $item->created_at }}</div>
                                                     @break
                                                 @case("reserved")                                                 
@@ -77,11 +77,11 @@
                                                     <div>{{ $item->reserved_at }}</div> 
                                                     @break
                                                 @case("completed")                                                    
-                                                    <div ><span class="badge badge-danger">Completed at</span></div>
+                                                    <div ><span class="badge badge-success">Completed at</span></div>
                                                     <div>{{ $item->completed_at }}</div>
                                                     @break
                                                 @case("paid")                                                     
-                                                    <div><span class="badge badge-sucess">Paid at</span></div>
+                                                    <div><span class="badge badge-primary">Paid at</span></div>
                                                     <div>{{ $item->paid_at }}</div>
                                                     @break
                                             @endswitch   
@@ -110,7 +110,7 @@
                                                         <input type="hidden" name="completed_at" value="{{ date('Y-m-d H:i:s')  }}">
                                                         <input type="hidden" name="status" value="completed">
                                                         <input type="hidden" name="developer_id" value="{{ Auth::id() }}">
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-check" aria-hidden="true"></i> เสร็จแล้ว</button>
+                                                        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> เสร็จแล้ว</button>
                                                         @break
                                                     @case("completed")
                                                        
