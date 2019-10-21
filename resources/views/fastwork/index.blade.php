@@ -109,7 +109,6 @@
                                                     @case("reserved") 
                                                         <input type="hidden" name="completed_at" value="{{ date('Y-m-d H:i:s')  }}">
                                                         <input type="hidden" name="status" value="completed">
-                                                        <input type="hidden" name="developer_id" value="{{ Auth::id() }}">
                                                         <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> เสร็จแล้ว</button>
                                                         @break
                                                     @case("completed")
