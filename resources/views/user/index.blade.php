@@ -4,37 +4,27 @@
     <div class="container">
         <div class="row">
             @include('admin.sidebar')
-
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Create New Payment</div>
+                    <div class="card-header">user</div>
                     <div class="card-body">
-                        <a href="{{ url('/payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br />
+                        <a href="{{ url('/user/create') }}" class="btn btn-success btn-sm" title="Add New user">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                        </a>
 
-                        @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
-
-                        <form method="POST" action="{{ url('/payment') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-
-                            @include ('payment.form', ['formMode' => 'create'])
-
+                        <form method="GET" action="{{ url('/user') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
                         </form>
 
-                    </div>
-                </div>
-
-                @if( $user )
-                <div class="card mt-4">
-                    <div class="card-header">Your Completed Fastworks are totally {{ $user->profile->completed_fastworks->sum('price') }}  Baht</div>
-                    <div class="card-body">
+                        <br/>
+                        <br/>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -44,10 +34,11 @@
                                         <th>Title</th>
                                         <th>Hours</th>
                                         <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($user->profile->completed_fastworks as $item)
+                                @foreach($user as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td>
@@ -57,7 +48,7 @@
                                         </td>
                                         <td>
                                             <h5>
-                                                <a href="{{ url('/') }}/fastwork/{{ $item->id }}">{{ $item->title }} ({{ $item->project->type }})</a>
+                                                <a href="{{ url('/') }}/user/{{ $item->id }}">{{ $item->title }} ({{ $item->project->type }})</a>
                                             </h5>
                                             <div>
                                               <a href="{{ url('/') }}/project/{{ $item->project_id }}">{{ $item->project->title }}</a>
@@ -66,7 +57,7 @@
                                             </div>
                                             <div>Dealine  : {{ $item->deadline }}</div>
                                             <div>
-                                              <a class="" href="{{ url('/fastwork/' . $item->id . '/edit') }}" title="Edit Fastwork">
+                                              <a class="" href="{{ url('/user/' . $item->id . '/edit') }}" title="Edit user">
                                                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                               </a>
                                             </div>
@@ -100,20 +91,55 @@
                                             @else
                                                 {{ $item->developer_id }}
                                             @endif                                     
-                                        </td>  
+                                        </td>                                        
+                                        <td>
+                                            <form method="POST" action="{{ url('/user' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
+                                                {{ method_field('PATCH') }}
+                                                {{ csrf_field() }}
+                                                @if( !isset($item->reserve_date) )
+                                                
+                                                @endif
+                                                @switch($item->status)
+                                                    @case("created")                                                  
+                                                        <input type="hidden" name="reserved_at" value="{{ date('Y-m-d H:i:s')  }}">
+                                                        <input type="hidden" name="status" value="reserved">
+                                                        <input type="hidden" name="developer_id" value="{{ Auth::id() }}">
+                                                        <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-calendar-plus" aria-hidden="true"></i> จอง</button>
+                                                        @break
+                                                    @case("reserved") 
+                                                        @if(Auth::user()->profile->role == "admin")
+                                                        <input type="hidden" name="completed_at" value="{{ date('Y-m-d H:i:s')  }}">
+                                                        <input type="hidden" name="status" value="completed">
+                                                        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> เสร็จแล้ว</button>
+                                                        @endif
+                                                        @break
+                                                    @case("completed")
+                                                       
+                                                    @case("paid")                                                    
+                                                        
+                                                        @break
+                                                @endswitch
+                                            </form>
+
+
+                                            <a class="d-none" href="{{ url('/user/' . $item->id) }}" title="View user"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+
+                                            <form class="d-none" method="POST" action="{{ url('/user' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
+                                                {{ method_field('DELETE') }}
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete user" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
+                            <div class="pagination-wrapper"> {!! $user->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
                     </div>
-                    </div>
                 </div>
-                @endif
             </div>
-
-            
         </div>
     </div>
 @endsection

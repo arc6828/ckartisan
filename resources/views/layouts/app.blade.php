@@ -20,9 +20,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ url('/') }}/images/logo.png" class="js-favicon">
     <script src="https://kit.fontawesome.com/d59a8a2721.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    @yield('vuejs')
 </head>
 <body>
-    <div id="app">
+    <div id="app2">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -77,9 +79,9 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <div class="py-4">
             @yield('content')
-        </main>
+        </div>
     </div>
 </body>
 </html>

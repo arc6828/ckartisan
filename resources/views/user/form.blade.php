@@ -31,21 +31,9 @@
 </div>
 @endif
 <div class="form-group {{ $errors->has('hours') ? 'has-error' : ''}}">
-    <label for="hours" class="control-label">{{ 'Hours' }}  </label>
-    <input class="form-control" name="hours" type="number" step="any" id="hours" value="{{ isset($fastwork->hours) ? $fastwork->hours : '0'}}" onkeyup="calculatePrice();">
+    <label for="hours" class="control-label">{{ 'Hours' }}</label>
+    <input class="form-control" name="hours" type="number" step="any" id="hours" value="{{ isset($fastwork->hours) ? $fastwork->hours : ''}}" >
     {!! $errors->first('hours', '<p class="help-block">:message</p>') !!}
-</div>
-
-<div class="form-group {{ $errors->has('price_per_hour') ? 'has-error' : ''}}">
-    <label for="price_per_hour" class="control-label">{{ 'Price per Hour' }}</label>
-    <input class="form-control" name="price_per_hour" type="number" step="any" id="price_per_hour" value="{{ isset($fastwork->price_per_hour) ? $fastwork->price_per_hour : '0'}}" onkeyup="calculatePrice();">
-    {!! $errors->first('price_per_hour', '<p class="help-block">:message</p>') !!}
-</div>
-
-<div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
-    <label for="price" class="control-label">{{ 'Price' }}</label>
-    <input class="form-control" name="price" type="number" step="any" id="price"  value="{{ isset($fastwork->price) ? $fastwork->price : '0'}}" readonly>
-    {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('developer_id') ? 'has-error' : ''}}">
     <label for="developer_id" class="control-label">{{ 'Developer' }}</label>
@@ -92,13 +80,3 @@
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>
-
-
-<script>
-function calculatePrice(){
-    var price_per_hour = parseFloat(document.querySelector("#price_per_hour").value);
-    var hours = parseFloat(document.querySelector("#hours").value);
-    var price = price_per_hour * hours;
-    document.querySelector("#price").value = price;
-}
-</script>

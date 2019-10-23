@@ -58,6 +58,8 @@ class ProfileController extends Controller
 
         $requestData = $request->all();
         if ($request->hasFile('photo')) {
+        
+            $user_id = Auth::id();
             $requestData['photo'] = $request->file('photo')
                 ->store("uploads/$user_id", 'public');
         }
@@ -114,7 +116,8 @@ class ProfileController extends Controller
         if(Auth::user()->profile->role == "admin" ){
             $requestData = $request->all();
         }
-        if ($request->hasFile('photo')) {
+        if ($request->hasFile('photo')) {        
+            $user_id = Auth::id();
             $requestData['photo'] = $request->file('photo')
                 ->store("uploads/$user_id", 'public');
         }

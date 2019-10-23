@@ -25,7 +25,13 @@ class Payment extends Model
      *
      * @var array
      */
-    protected $fillable = ['totol', 'user_id', 'remark', 'paid_at', 'receipt'];
+    protected $fillable = ['total', 'user_id', 'remark', 'paid_at', 'receipt'];
 
+    public function user(){
+        return $this->belongsTo('App\User','user_id');
+    }
+    public function fastworks(){
+        return $this->hasMany('App\Fastwork','payment_id');
+    }
     
 }

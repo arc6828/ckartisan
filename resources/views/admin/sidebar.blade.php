@@ -15,17 +15,19 @@
                     <a href="{{ url('/fastwork') }}">
                         fastwork
                     </a>
-                </li>                           
-                <li role="presentation">
-                    <a href="{{ url('/fastwork?search=completed') }}">
-                        ชั่วโมงสะสม
-                    </a>
                 </li>                         
                 <li role="presentation">
                     <a href="{{ url('/payment') }}">
-                        ประวัติการสร้างรายได้
+                        การสร้างรายได้
+                    </a>
+                </li>   
+                @if(Auth::user()->profile->role == "admin")                  
+                <li role="presentation">
+                    <a href="{{ url('/profile') }}">
+                        นักพัฒนา
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
     </div>

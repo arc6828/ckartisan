@@ -1,7 +1,7 @@
 {
     "fields": [        
         {
-            "name": "totol",
+            "name": "total",
             "type": "float"
         },
         {

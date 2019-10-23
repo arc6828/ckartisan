@@ -13,6 +13,7 @@
     <input class="form-control" name="role" type="text" id="role" value="{{ isset($profile->role) ? $profile->role : ''}}" disabled >
     {!! $errors->first('role', '<p class="help-block">:message</p>') !!}
 </div>
+
 <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
     <label for="user_id" class="control-label">{{ 'User Id' }}</label>
     <input class="form-control" name="user_id" type="number" id="user_id" value="{{ isset($profile->user_id) ? $profile->user_id : ''}}"  disabled>

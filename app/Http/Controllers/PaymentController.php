@@ -6,7 +6,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Payment;
+use App\Fastwork;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -20,15 +23,12 @@ class PaymentController extends Controller
         $keyword = $request->get('search');
         $perPage = 25;
 
-        if (!empty($keyword)) {
-            $payment = Payment::where('totol', 'LIKE', "%$keyword%")
-                ->orWhere('user_id', 'LIKE', "%$keyword%")
-                ->orWhere('remark', 'LIKE', "%$keyword%")
-                ->orWhere('paid_at', 'LIKE', "%$keyword%")
-                ->orWhere('receipt', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
+
+        //ADMIN        
+        if(Auth::user()->profile->role == "admin"){            
             $payment = Payment::latest()->paginate($perPage);
+        }else{
+            $payment = Payment::where('user_id',Auth::id())->latest()->paginate($perPage);
         }
 
         return view('payment.index', compact('payment'));
@@ -39,9 +39,20 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('payment.create');
+        $payment = null;
+        
+        $user_id = $request->get('user_id');
+        $user = User::find($user_id);
+        if($user){
+            $payment = new Payment;
+            $payment->total = $user->profile->completed_fastworks->sum('price');
+            $payment->user_name = $user->name;
+            $payment->user_id = $user->id;
+
+        }
+        return view('payment.create',compact('user','payment'));
     }
 
     /**
@@ -60,8 +71,20 @@ class PaymentController extends Controller
                 ->store('uploads', 'public');
         }
 
-        Payment::create($requestData);
+        $payment = Payment::create($requestData);
 
+        //UPDATE status, paid_at of Fastwork
+        $user_id = $requestData['user_id'];
+        if( $user_id ){
+            $data = [
+                'payment_id' => $payment->id ,
+                'status' => "paid" ,
+                'paid_at' => date("Y-m-d H:i:s") ,
+            ];
+            $fastworks = Fastwork::where('status','completed')
+                ->where('user_id', $requestData['user_id'])
+                ->update( $data );
+        }
         return redirect('payment')->with('flash_message', 'Payment added!');
     }
 
@@ -105,9 +128,10 @@ class PaymentController extends Controller
     {
         
         $requestData = $request->all();
-                if ($request->hasFile('receipt')) {
+        if ($request->hasFile('receipt')) {
             $requestData['receipt'] = $request->file('receipt')
                 ->store('uploads', 'public');
+            $requestData['paid_at'] = date("Y-m-d H:i:s");
         }
 
         $payment = Payment::findOrFail($id);

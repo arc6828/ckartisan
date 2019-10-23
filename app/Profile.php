@@ -18,4 +18,9 @@ class Profile extends Model
         return $this->hasMany('App\Fastwork', 'developer_id', 'user_id')->orderBy('created_at', 'desc');  
     }
 
+    
+    public function completed_fastworks(){
+        return $this->hasMany('App\Fastwork', 'developer_id', 'user_id')->where('status','completed')->orderBy('created_at', 'desc');  
+    }
+
 }

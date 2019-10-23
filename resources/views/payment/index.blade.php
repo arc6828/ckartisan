@@ -30,14 +30,25 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Totol</th><th>User Id</th><th>Remark</th><th>Paid At</th><th>Receipt</th><th>Actions</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>total</th>
+                                        <th>Remark</th><th>Paid At</th><th>Receipt</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($payment as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->totol }}</td><td>{{ $item->user_id }}</td><td>{{ $item->remark }}</td><td>{{ $item->paid_at }}</td><td>{{ $item->receipt }}</td>
+                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ $item->total }}</td>
+                                        <td>{{ $item->remark }}</td>
+                                        <td>{{ $item->paid_at }}</td>
+                                        <td>
+                                            @if( isset($item->receipt) )
+                                                <img src="{{ url('storage') }}/{{ $item->receipt }}"  width="100" />
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ url('/payment/' . $item->id) }}" title="View Payment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/payment/' . $item->id . '/edit') }}" title="Edit Payment"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

@@ -1,0 +1,55 @@
+{
+    "fields": [
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "content",
+            "type": "text"
+        },
+        {
+            "name": "deadline",
+            "type": "date"
+        },
+        {
+            "name": "reserve_date",
+            "type": "timestamp"
+        },
+        {
+            "name": "accept_date",
+            "type": "timestamp"
+        },
+        {
+            "name": "complete_date",
+            "type": "timestamp"
+        },
+        {
+            "name": "developer_id",
+            "type": "string"
+        },
+        {
+            "name": "project_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "user_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        },
+        {
+            "name": "photo",
+            "type": "file"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\User"
+        }
+    ]
+}

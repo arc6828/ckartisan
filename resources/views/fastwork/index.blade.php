@@ -107,9 +107,11 @@
                                                         <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-calendar-plus" aria-hidden="true"></i> จอง</button>
                                                         @break
                                                     @case("reserved") 
+                                                        @if(Auth::user()->profile->role == "admin")
                                                         <input type="hidden" name="completed_at" value="{{ date('Y-m-d H:i:s')  }}">
                                                         <input type="hidden" name="status" value="completed">
                                                         <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> เสร็จแล้ว</button>
+                                                        @endif
                                                         @break
                                                     @case("completed")
                                                        

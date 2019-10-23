@@ -29,19 +29,27 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Name</th><th>Email</th><th>Role</th><th>User Id</th><th>Photo</th><th>Actions</th>
+                                        <th>#</th><th>Name</th><th>Email</th>
+                                        <th>Role</th>
+                                        <th>Photo</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($profile as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->email }}</td><td>{{ $item->role }}</td><td>{{ $item->user_id }}</td><td>{{ $item->photo }}</td>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ $item->user->email }}</td>
+                                        <td>{{ $item->role }}</td>
+                                        
+                                        <td><img src="{{ url('storage') }}/{{ $item->photo }}" width="100" /></td>
                                         <td>
-                                            <a href="{{ url('/profile/' . $item->id) }}" title="View Profile"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/profile/' . $item->id . '/edit') }}" title="Edit Profile"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                            <a href="{{ url('/payment/create') }}?user_id={{$item->user_id}}" title="สร้างรายได้"><button class="btn btn-info btn-sm"><i class="fa fa-credit-card pr-1" aria-hidden="true"></i> สร้างรายได้</button></a>
+                                            
+                                            <a href="{{ url('/profile/' . $item->id) }}" title="View Profile"><button class="btn btn-info btn-sm d-none"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            <a href="{{ url('/profile/' . $item->id . '/edit') }}" title="Edit Profile"><button class="btn btn-primary btn-sm d-none"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
-                                            <form method="POST" action="{{ url('/profile' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
+                                            <form method="POST" action="{{ url('/profile' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline" class="d-none">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Delete Profile" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
