@@ -93,7 +93,7 @@ class ProfileController extends Controller
     public function edit($id)
     {        
         if(Auth::user()->profile->role != "admin" ){
-            if(Auth::id() != $id){
+            if(Auth::user()->profile->id != $id){
                 abort(404);
             }
         }
