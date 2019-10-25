@@ -29,22 +29,27 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Name</th><th>Email</th>
-                                        <th>Role</th>
-                                        <th>Photo</th><th>Actions</th>
+                                        <th>Photo</th>
+                                        <th>User</th>
+                                        <th>Bank</th>                                        
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($profile as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td><a href="{{ url('/') }}/user/{{ $item->user_id }}">{{ $item->user->name }}</a></td>
-                                        <td>{{ $item->user->email }}</td>
-                                        <td>{{ $item->role }}</td>
-                                        
                                         <td>
                                             <img src="{{ isset($item->photo) ? url('storage/'.$item->photo ) : url('/images/noimage.png') }}" width="100" />
                                         </td>
+                                        <td>
+                                            <div><a href="{{ url('/') }}/user/{{ $item->user_id }}">{{ $item->user->name }}</a></div>
+                                            <div>{{ $item->user->email }}</div>
+                                            <div>{{ $item->role }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->bank_name }}</div>
+                                            <div>{{ $item->bank_account }}</div>
+                                        </td>        
                                         <td>
                                             <a href="{{ url('/payment/create') }}?user_id={{$item->user_id}}" title="สร้างรายได้"><button class="btn btn-info btn-sm"><i class="fa fa-credit-card pr-1" aria-hidden="true"></i> สร้างรายได้</button></a>
                                             

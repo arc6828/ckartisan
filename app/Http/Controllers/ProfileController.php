@@ -92,6 +92,7 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {        
+        //IF YOU ARE NOT ADMIN , YOU GOT 404 WHEN YOU TRY TO EDIT OTHER PROFILE
         if(Auth::user()->profile->role != "admin" ){
             if(Auth::user()->profile->id != $id){
                 abort(404);
