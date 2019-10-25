@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('user', 'UserController')->except(['show']);
     });
     //USER AND ADMIN
-    Route::middleware(['role:admin,user'])->group(function () {        
+    Route::middleware(['role:admin,user,developer'])->group(function () {        
         Route::resource('fastwork', 'FastworkController')->only(['index','show','update']);         
         Route::resource('payment', 'PaymentController')->only(['index','show']); 
         Route::resource('profile', 'ProfileController')->only(['index','show','edit','update']);        

@@ -33,6 +33,11 @@
                                     <tr><th> Name </th><td> {{ $profile->user->name }} </td></tr>
                                     <tr><th> Email </th><td> {{ $profile->user->email }} </td></tr>
                                     <tr><th> Role </th><td> {{ $profile->role }} </td></tr>
+                                    <tr><th> บัญชีธนาคาร </th><td> 
+                                        <div>{{ $profile->bank_name}} </div>
+                                        <div>{{ $profile->bank_account ? str_replace([0,2,4,6,8], "x", $profile->bank_account ) : ''  }} </div>
+                                    </td></tr>
+                                    
                                 </tbody>
                             </table>
                         </div>

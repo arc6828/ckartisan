@@ -19,6 +19,17 @@
     <input class="form-control" name="user_id" type="number" id="user_id" value="{{ isset($profile->user_id) ? $profile->user_id : ''}}"  disabled>
     {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group {{ $errors->has('bank_name') ? 'has-error' : ''}}">
+    <label for="bank_name" class="control-label">{{ 'ชื่อธนาคาร' }}</label>
+    <input class="form-control" name="bank_name" type="text" id="bank_name" value="{{ isset($profile->bank_name) ? $profile->bank_name : ''}}" placeholder="เช่น กรุงไทย, ไทยพาณิชย์, กสิกร เป็นต้น" >
+    {!! $errors->first('bank_name', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('bank_account') ? 'has-error' : ''}}">
+    <label for="bank_account" class="control-label">{{ 'เลขที่บัญชีธนาคาร' }}</label>
+    <input class="form-control" name="bank_account" type="text" id="bank_account" value="{{ isset($profile->bank_account) ? $profile->bank_account : ''}}" placeholder="เช่น 123-123-55555-5 เป็นต้น" >
+    {!! $errors->first('bank_account', '<p class="help-block">:message</p>') !!}
+</div>
+
 <div class="form-group {{ $errors->has('photo') ? 'has-error' : ''}}">
     <label for="photo" class="control-label">{{ 'Photo' }}</label>
     <input class="form-control" name="photo" type="file" id="photo" value="{{ isset($profile->photo) ? $profile->photo : ''}}" >
