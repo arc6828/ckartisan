@@ -47,7 +47,7 @@ class PaymentController extends Controller
         $user = User::find($user_id);
         if($user){
             $payment = new Payment;
-            $payment->total = $user->profile->completed_fastworks->sum('price');
+            $payment->total = $user->profile->completed_part_time_fastworks->sum('price');
             $payment->user_name = $user->name;
             $payment->user_id = $user->id;
 
@@ -66,7 +66,7 @@ class PaymentController extends Controller
     {
         
         $requestData = $request->all();
-                if ($request->hasFile('receipt')) {
+        if ($request->hasFile('receipt')) {
             $requestData['receipt'] = $request->file('receipt')
                 ->store('uploads', 'public');
         }
@@ -81,8 +81,11 @@ class PaymentController extends Controller
                 'status' => "paid" ,
                 'paid_at' => date("Y-m-d H:i:s") ,
             ];
-            $fastworks = Fastwork::where('status','completed')
-                ->where('user_id', $requestData['user_id'])
+            $fastworks = Fastwork::join('projects','fastworks.project_id','=','projects.id')
+                ->where('type','part-time')
+                ->where('status','completed')
+                ->where('developer_id', $requestData['user_id'])
+                ->select('fastworks.*')
                 ->update( $data );
         }
         return redirect('payment')->with('flash_message', 'Payment added!');

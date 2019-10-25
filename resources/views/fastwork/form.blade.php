@@ -53,6 +53,11 @@
     <input class="form-control" name="developer_id" type="hidden" id="developer_id" value="{{ isset($fastwork->developer_id) ? $fastwork->developer_id : ''}}" disabled>
     {!! $errors->first('developer_id', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
+    <label for="status" class="control-label">{{ 'Status' }}</label>
+    <input class="form-control" name="status" type="text" id="status" value="{{ isset($fastwork->status) ? $fastwork->status : ''}}" readonly>
+    {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group {{ $errors->has('project_id') ? 'has-error' : ''}}">
     <label for="project_id" class="control-label">{{ 'Project Id' }}</label>
     <select class="form-control" name="project_id" id="project_id">
@@ -65,9 +70,6 @@
         </option>
         @endforeach
     </select>
-    <script>
-        document.querySelector("#project_id").value = "";
-    </script>
     {!! $errors->first('project_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">

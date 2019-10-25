@@ -58,6 +58,9 @@ class OcrController extends Controller
         if ($request->hasFile('photo')) {
             $requestData['photo'] = $request->file('photo')
                 ->store('uploads/ocr', 'public');
+
+            //FOR OCR 
+
             $path = storage_path('app/public/'.$requestData['photo']);
             //echo $path;
             $detected_text = $this->detect_text2($path);
@@ -104,6 +107,7 @@ class OcrController extends Controller
 
     function detect_text2($path)
     {
+        //https://onlinelearningportal.website/google-vision-api-implementation-with-laravel-5-8/
         $key_path = storage_path('../public/CKartisan-c6f07fc70d07.json');
         $vision = new VisionClient(['keyFile' => json_decode(file_get_contents($key_path), true)]); 
         
@@ -123,7 +127,9 @@ class OcrController extends Controller
             {
                 if($first) {$first = false; continue;}
                 $description[]=$text->description();
+                //GET CLEAN DATA 
                 $temp = $this->cleanNumber($text->description());
+                //ถ้าได้ตัวเลขน้อยกว่าเดิม ให้บันทึก
                 if($temp){
                     if($title){
                         if($temp < $title){
@@ -171,10 +177,8 @@ class OcrController extends Controller
                 if($number % 10 == 0){
                     return $number;
                 }
-            }
-            
-        }
-        
+            }            
+        }        
         return false;
     }
 

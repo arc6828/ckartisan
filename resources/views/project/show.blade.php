@@ -66,58 +66,16 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Job ID</th>
                                             <th>Photo</th>
                                             <th>Title</th>
                                             <th>Hours</th>
                                             <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($project->fastworks as $item)
-                                        <tr>
-                                            <td>{{ $item->id }}</td>
-                                            <td>
-                                                <a href="{{ url('/') }}/storage/{{ isset($item->photo) ? $item->photo : '../images/noimage.png' }}" target="_blank">
-                                                    <img src="{{ url('/') }}/storage/{{ isset($item->photo) ? $item->photo : '../images/noimage.png' }}" width="100">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <h5>
-                                                    <a href="{{ url('/') }}/fastwork/{{ $item->id }}">{{ $item->title }}</a>
-                                                </h5>
-                                                <div>
-                                                <a href="{{ url('/') }}/project/{{ $item->project_id }}">{{ $item->project->title }}</a>
-                                                by
-                                                <a href="{{ url('/') }}/user/{{ $item->user_id }}">{{ $item->user->name }}</a>
-                                                </div>
-                                                <div>Dealine  : {{ $item->deadline }}</div>
-                                                <div>
-                                                <a class="" href="{{ url('/fastwork/' . $item->id . '/edit') }}" title="Edit Fastwork">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                </a>
-                                                </div>
-
-                                            </td>
-                                            <td class="text-center">
-                                                {{ $item->hours}}
-                                            </td>
-                                            <td>
-                                            @if( isset($item->complete_date) )
-                                            <div ><span class="badge badge-success">Completed at</span></div>
-                                            <div>{{ $item->complete_date }}</div>
-                                            @elseif( isset($item->accept_date) )
-                                            <div><span class="badge badge-info">Accepted at</span></div>
-                                            <div>{{ $item->accept_date }}</div>
-                                            @elseif( isset($item->reserve_date) )
-                                            <div><span class="badge badge-warning">Reserved at</span></div>
-                                            <div>{{ $item->reserve_date }}</div>
-                                            @else
-                                            <div><span class="badge badge-primary">Created at</span></div>
-                                            <div>{{ $item->created_at }}</div>
-                                            @endif
-                                            </td>
-                                        </tr>
+                                    @foreach($project->fastworks as $item)                                        
+                                        @include('fastwork/index_item')
                                     @endforeach
                                     </tbody>
                                 </table>
