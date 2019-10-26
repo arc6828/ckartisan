@@ -39,7 +39,7 @@
                                 @foreach($profile as $item)
                                     <tr>
                                         <td>
-                                            <img src="{{ isset($item->photo) ? url('storage/'.$item->photo ) : url('/images/noimage.png') }}" width="100" />
+                                            <img class="img-thumbnail" src="{{ isset($item->photo) ? url('storage/'.$item->photo ) : url('/images/noimage.png') }}" width="100" />
                                         </td>
                                         <td>
                                             <div><a href="{{ url('/') }}/user/{{ $item->user_id }}">{{ $item->user->name }}</a></div>
