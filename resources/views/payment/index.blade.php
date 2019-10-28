@@ -36,7 +36,6 @@
                                         <th>Name</th>
                                         <th>total</th>
                                         <th>Paid At</th>
-                                        <th>Receipt</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
