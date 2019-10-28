@@ -10,23 +10,25 @@
                     <a href="{{ url('/home') }}">
                         หน้าหลัก
                     </a>
-                </li>                
-                <li role="presentation">
-                    <a href="{{ url('/fastwork') }}">
-                        fastwork
-                    </a>
-                </li>                         
-                <li role="presentation">
-                    <a href="{{ url('/payment') }}">
-                        การสร้างรายได้
-                    </a>
-                </li>   
-                @if(Auth::user()->profile->role == "admin")                  
-                <li role="presentation">
-                    <a href="{{ url('/profile') }}">
-                        นักพัฒนา
-                    </a>
-                </li>
+                </li>        
+                @if(Auth::check()) {        
+                    <li role="presentation">
+                        <a href="{{ url('/fastwork') }}">
+                            fastwork
+                        </a>
+                    </li>                         
+                    <li role="presentation">
+                        <a href="{{ url('/payment') }}">
+                            การสร้างรายได้
+                        </a>
+                    </li>   
+                    @if(Auth::user()->profile->role == "admin")                  
+                    <li role="presentation">
+                        <a href="{{ url('/profile') }}">
+                            นักพัฒนา
+                        </a>
+                    </li>
+                    @endif
                 @endif
             </ul>
         </div>
