@@ -11,7 +11,7 @@
                         หน้าหลัก
                     </a>
                 </li>        
-                @if(Auth::check()) {        
+                @if(Auth::check())        
                     <li role="presentation">
                         <a href="{{ url('/fastwork') }}">
                             fastwork
