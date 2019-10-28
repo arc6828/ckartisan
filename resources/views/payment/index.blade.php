@@ -35,7 +35,6 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>total</th>
-                                        <th>Remark</th>
                                         <th>Paid At</th>
                                         <th>Receipt</th>
                                         <th>Actions</th>
@@ -45,14 +44,21 @@
                                 @foreach($payment as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->user->name }}</td>
-                                        <td>{{ $item->total }}</td>
-                                        <td>{{ $item->remark }}</td>
-                                        <td>{{ $item->paid_at }}</td>
                                         <td>
+                                            <div>{{ $item->user->name }}</div>
+                                            <div>{{ $item->user->profile->bank_name }}</div>
+                                            <div>{{ $item->user->profile->bank_account }}</div>                                        
+                                            
+                                            <div class="text-danger">{{ $item->remark }}</div>
+                                        </td>
+                                        <td>{{ $item->total }}</td>
+                                        <td>               
+                                            <div>{{ $item->paid_at }}</div>
                                             @if( isset($item->receipt) )
-                                                <img src="{{ url('storage') }}/{{ $item->receipt }}"  width="100" />
-                                            @endif
+                                                <a href="{{ url('storage') }}/{{ $item->receipt }}" target="_blank">
+                                                    <img src="{{ url('storage') }}/{{ $item->receipt }}"  width="70" />
+                                                </a>
+                                            @endif                             
                                         </td>
                                         <td>
                                             <a href="{{ url('/payment/' . $item->id) }}" title="View Payment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
