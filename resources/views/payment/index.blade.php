@@ -7,7 +7,9 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Payment</div>
+                    <div class="card-header">
+                        Payment <span class="text-danger">{{ $withdraw? "({$withdraw} บาทที่ต้องโอน)" : ""  }}</span>
+                    </div>
                     <div class="card-body">
                         <a href="{{ url('/payment/create') }}" class="btn btn-success btn-sm" title="Add New Payment">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
@@ -33,7 +35,10 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>total</th>
-                                        <th>Remark</th><th>Paid At</th><th>Receipt</th><th>Actions</th>
+                                        <th>Remark</th>
+                                        <th>Paid At</th>
+                                        <th>Receipt</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>

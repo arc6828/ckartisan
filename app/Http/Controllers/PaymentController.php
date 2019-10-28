@@ -21,17 +21,19 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
+        $withdraw = null;
         $perPage = 25;
 
 
         //ADMIN        
-        if(Auth::user()->profile->role == "admin"){            
+        if(Auth::user()->profile->role == "admin"){       
+            $withdraw = Payment::whereNull('paid_at')->sum('total');
             $payment = Payment::latest()->paginate($perPage);
         }else{
             $payment = Payment::where('user_id',Auth::id())->latest()->paginate($perPage);
         }
 
-        return view('payment.index', compact('payment'));
+        return view('payment.index', compact('payment','withdraw'));
     }
 
     /**
