@@ -10,6 +10,7 @@ use App\FastworkStatus;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class FastworkController extends Controller
 {
@@ -65,11 +66,25 @@ class FastworkController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'photo' => 'image'
+        ]);
 
         $requestData = $request->all();
-                if ($request->hasFile('photo')) {
-            $requestData['photo'] = $request->file('photo')
-                ->store('uploads/fastwork', 'public');
+        if ($request->hasFile('photo')) {
+            //SAVE FILE
+            $requestData['photo'] = $request->file('photo')->store('uploads/fastwork', 'public');
+
+            //RESIZE 50% FILE IF IMAGE LARGER THAN 1 MB
+            $image = Image::make(storage_path("app/public")."/".$requestData['photo']);
+            $size = $image->filesize();            
+            if($size > 1024000 ){
+                $image->resize(
+                    intval($image->width()/2) , 
+                    intval($image->height()/2)
+                )->save();        
+            }            
+
         }
         $requestData['status'] = "created";
 
@@ -147,11 +162,24 @@ class FastworkController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'photo' => 'image'
+        ]);
 
         $requestData = $request->all();
-                if ($request->hasFile('photo')) {
-            $requestData['photo'] = $request->file('photo')
-                ->store('uploads/fastwork', 'public');
+        if ($request->hasFile('photo')) {
+            //SAVE FILE
+            $requestData['photo'] = $request->file('photo')->store('uploads/fastwork', 'public');
+
+            //RESIZE 50% FILE IF IMAGE LARGER THAN 1 MB
+            $image = Image::make(storage_path("app/public")."/".$requestData['photo']);
+            $size = $image->filesize();            
+            if($size > 1024000 ){
+                $image->resize(
+                    intval($image->width()/2) , 
+                    intval($image->height()/2)
+                )->save();        
+            }  
         }
         
         //$requestData['status'] = "created";

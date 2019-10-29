@@ -34,14 +34,20 @@
                                     <tr><th> Paid Date </th><td> {{ $fastwork->paid_at }} </td></tr>
                                     
                                     <tr><th> Status </th><td> {{ $fastwork->status }} </td></tr>
-                                    <tr><th> Developer Id </th><td> {{ $fastwork->developer->name }} </td></tr>
+                                    <tr><th> Developer Id </th><td> {{ $fastwork->developer? $fastwork->developer->name : '' }} </td></tr>
                                     <tr><th> Project Id </th><td> {{ $fastwork->project->title }} </td></tr>
                                     <tr><th> Project Owner </th><td> {{ $fastwork->user->name }} </td></tr>
                                     <tr><th> Hours </th><td> {{ $fastwork->hours }} </td></tr>
                                     <tr><th> Price Per Hour </th><td> {{ $fastwork->price_per_hour }} </td></tr>
                                     <tr><th> Price </th><td> {{ $fastwork->price }} </td></tr>
                                     <tr><th> Remark </th><td> {{ $fastwork->remark }} </td></tr>
-                                    <tr><th> Photo </th><td> {{ $fastwork->photo }} </td></tr>
+                                    <tr><th> Photo </th>
+                                        <td> 
+                                        @if($fastwork->photo)
+                                        <img src="{{ url('storage') }}/{{ $fastwork->photo }}" width="100" />
+                                        @endif
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

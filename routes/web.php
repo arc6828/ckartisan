@@ -46,4 +46,12 @@ Route::middleware(['auth'])->group(function () {
     });
     
 });
+use Intervention\Image\ImageManagerStatic as Image;
 
+
+Route::get('/img', function()
+{
+    $img = Image::make(url('/foo.jpg'))->resize(300, 200);
+
+    return $img->response('jpg');
+});
