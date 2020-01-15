@@ -23,14 +23,15 @@ class ProfileController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $profile = Profile::where('name', 'LIKE', "%$keyword%")
+            $profile = Profile::whereNotIn('name', ["guest"])
+                ->where('name', 'LIKE', "%$keyword%")
                 ->orWhere('email', 'LIKE', "%$keyword%")
                 ->orWhere('role', 'LIKE', "%$keyword%")
                 ->orWhere('user_id', 'LIKE', "%$keyword%")
                 ->orWhere('photo', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $profile = Profile::latest()->paginate($perPage);
+            $profile = Profile::whereNotIn('name', ["guest"])->latest()->paginate($perPage);
         }
 
         return view('profile.index', compact('profile'));
@@ -120,9 +121,9 @@ class ProfileController extends Controller
         if ($request->hasFile('photo')) {        
             $user_id = Auth::id();
             $requestData['photo'] = $request->file('photo')
-                ->store("uploads/$user_id", 'public');
+                ->store("uploads/$user_id", 'public');            
         }
-
+        $requestData['role'] = "user";
         $profile = Profile::findOrFail($id);
         $profile->update($requestData);
         

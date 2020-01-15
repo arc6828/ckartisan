@@ -26,7 +26,10 @@ class HomeController extends Controller
     public function index()
     {
         $profile = Profile::firstOrCreate(
-            ['user_id' => Auth::id()]
+            ['user_id' => Auth::id()],
+            [
+                'role' => 'guest',
+            ]
         );
         return view('profile/show',compact('profile') );
     }
