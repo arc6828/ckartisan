@@ -23,15 +23,15 @@ class ProfileController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $profile = Profile::whereNotIn('name', ["guest"])
-                ->where('name', 'LIKE', "%$keyword%")
-                ->orWhere('email', 'LIKE', "%$keyword%")
-                ->orWhere('role', 'LIKE', "%$keyword%")
+            $profile = Profile::whereNotIn('role', ["guest"])
+                //->where('name', 'LIKE', "%$keyword%")
+                //->orWhere('email', 'LIKE', "%$keyword%")
+                ->where('role', 'LIKE', "%$keyword%")
                 ->orWhere('user_id', 'LIKE', "%$keyword%")
                 ->orWhere('photo', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $profile = Profile::whereNotIn('name', ["guest"])->latest()->paginate($perPage);
+            $profile = Profile::whereNotIn('role', ["guest"])->latest()->paginate($perPage);
         }
 
         return view('profile.index', compact('profile'));
