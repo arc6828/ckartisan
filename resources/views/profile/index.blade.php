@@ -44,9 +44,12 @@
                                         <td>
                                             <div><a href="{{ url('/') }}/user/{{ $item->user_id }}">{{ $item->user->name }}</a></div>
                                             <div>{{ $item->user->email }}</div>
-                                            <div>{{ $item->role }}</div>
+                                            <div>{{ $item->role }}</div>                                            
+                                            @if(Auth::user()->profile->role == "admin"  )
+                                            <div>รายได้สะสม : <span class="badge badge-pill badge-success">{{ $item->fastworks->where('status','paid')->sum('price') }}</span> บาท</div>
+                                            @endif
                                             @if(Auth::user()->profile->role == "admin" && $item->completed_fastworks->sum('price') > 0)
-                                            <div>ที่ค้างชำระ : <span class="badge badge-pill badge-danger">{{ number_format($item->completed_fastworks->sum('price')) }}</span> บาท</div>
+                                            <div>ที่ค้างชำระ : <span class="badge badge-pill badge-danger">{{ number_format($item->completed_fastworks->sum('price')) }}</span> บาท</div>                                            
                                             @endif
                                         </td>
                                         <td>
