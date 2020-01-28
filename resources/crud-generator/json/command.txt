@@ -9,3 +9,5 @@ php artisan crud:generate Ocr --fields_from_file="resources/crud-generator/json/
 php artisan crud:generate FastworkStatus --fields_from_file="resources/crud-generator/json/fastwork_status.json"
 
 php artisan crud:generate Payment --fields_from_file="resources/crud-generator/json/payment.json"
+
+php artisan crud:generate Income --fields_from_file="resources/crud-generator/json/income.json"

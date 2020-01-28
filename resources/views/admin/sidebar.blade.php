@@ -32,6 +32,11 @@
                         <a href="{{ url('/project') }}">
                             Project
                         </a>
+                    </li>                    
+                    <li role="presentation">
+                        <a href="{{ url('/income') }}">
+                            Income
+                        </a>
                     </li>
                     @endif
                 @endif

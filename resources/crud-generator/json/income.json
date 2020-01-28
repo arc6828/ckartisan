@@ -1,0 +1,32 @@
+{
+    "fields": [   
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        },     
+        {
+            "name": "project_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "user_id",
+            "type": "integer#unsigned"
+        }, 
+        {
+            "name": "total",
+            "type": "float"
+        },
+        {
+            "name": "paid_date",
+            "type": "date"
+        },
+        {
+            "name": "receipt",
+            "type": "file"
+        }
+    ]
+}

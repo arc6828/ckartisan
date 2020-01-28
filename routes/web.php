@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('profile', 'ProfileController')->except(['index','show','edit','update']);
         Route::resource('project', 'ProjectController')->except(['index','show']);        
         Route::resource('user', 'UserController')->except(['show']);
+        Route::resource('income', 'IncomeController');
     });
     //USER AND ADMIN
     Route::middleware(['role:admin,user,developer'])->group(function () {        
