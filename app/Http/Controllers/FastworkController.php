@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Fastwork;
 use App\FastworkStatus;
 use App\Project;
+use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -53,8 +54,9 @@ class FastworkController extends Controller
     public function create()
     {
         $projects = Project::all();
+        $profile = Profile::where('role','user')->get();
 
-        return view('fastwork.create', compact('projects'));
+        return view('fastwork.create', compact('projects','profiles'));
     }
 
     /**
@@ -149,7 +151,8 @@ class FastworkController extends Controller
     {
         $fastwork = Fastwork::findOrFail($id);
         $projects = Project::all();
-        return view('fastwork.edit', compact('fastwork','projects'));
+
+        return view('fastwork.edit', compact('fastwork','projects','profiles'));
     }
 
     /**

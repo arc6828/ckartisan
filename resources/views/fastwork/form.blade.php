@@ -51,6 +51,16 @@
     <label for="developer_id" class="control-label">{{ 'Developer' }}</label>
     <input class="form-control" name="developer_name" type="text" id="developer_name" value="{{ isset($fastwork->developer->name) ? $fastwork->developer->name : ''}}" disabled>
     <input class="form-control" name="developer_id" type="hidden" id="developer_id" value="{{ isset($fastwork->developer_id) ? $fastwork->developer_id : ''}}" disabled>
+    <select class="form-control" name="developer_id" id="developer_id">
+        @php
+          $developer_id = isset($fastwork->developer_id) ? $fastwork->developer_id : '';
+        @endphp
+        @foreach($profiles as $profile)
+        <option value="{{ $profile->user_id }}"  {{ ( $profile->user_id  ==  $developer_id  ) ? 'selected' : '' }} >
+            {{ $profile->user->name }}
+        </option>
+        @endforeach
+    </select>
     {!! $errors->first('developer_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
