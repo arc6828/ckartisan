@@ -54,7 +54,7 @@ class FastworkController extends Controller
     public function create()
     {
         $projects = Project::all();
-        $profiles = Profile::where('role','user')->get();
+        $profiles = Profile::whereIn('role',['user','admin'])->get();
 
         return view('fastwork.create', compact('projects','profiles'));
     }
@@ -88,7 +88,7 @@ class FastworkController extends Controller
             }            
 
         }
-        $requestData['status'] = "created";
+        $requestData['status'] = "created";        
 
         Fastwork::create($requestData);
 
@@ -151,7 +151,7 @@ class FastworkController extends Controller
     {
         $fastwork = Fastwork::findOrFail($id);
         $projects = Project::all();
-        $profiles = Profile::where('role','user')->get();
+        $profiles = Profile::whereIn('role',['user','admin'])->get();
 
         return view('fastwork.edit', compact('fastwork','projects','profiles'));
     }
