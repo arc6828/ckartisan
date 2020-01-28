@@ -32,8 +32,8 @@
                                     <tr>
                                         <th>ID</th><th>Photo</th><th>Title</th>
                                         @if(Auth::user()->profile->role == "admin")     
-                                        <th>Income <span class="badge badge-pill badge-success"> {{ number_format($incomes->sum('total'))  }} </span></th>
-                                        <th>Pay <span class="badge badge-pill badge-danger">{{ number_format($payments->sum('total')) }}</span></th>
+                                        <th>Income <br/> <span class="badge badge-pill badge-success"> {{ number_format($incomes->sum('total'))  }} </span></th>
+                                        <th>Pay <br/><span class="badge badge-pill badge-danger">{{ number_format($payments->sum('total')) }}</span></th>
                                         @endif
                                         <th class="d-none">Actions</th>
                                     </tr>
