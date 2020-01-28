@@ -10,7 +10,16 @@
 </div>
 <div class="form-group {{ $errors->has('project_id') ? 'has-error' : ''}}">
     <label for="project_id" class="control-label">{{ 'Project Id' }}</label>
-    <input class="form-control" name="project_id" type="number" id="project_id" value="{{ isset($income->project_id) ? $income->project_id : ''}}" >
+    <select class="form-control" name="project_id" id="project_id">
+        @php
+          $project_id = isset($income->project_id) ? $income->project_id : '';
+        @endphp
+        @foreach($projects as $project)
+        <option value="{{ $project->id }}"  {{ ( $project->id  ==  $project_id  ) ? 'selected' : '' }} >
+            {{ $project->title }}
+        </option>
+        @endforeach
+    </select>
     {!! $errors->first('project_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">

@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Income;
+use App\Project;
 use Illuminate\Http\Request;
 
 class IncomeController extends Controller
@@ -43,7 +44,8 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        return view('income.create');
+        $projects = Project::all();
+        return view('income.create',compact('projects'));
     }
 
     /**
@@ -91,8 +93,9 @@ class IncomeController extends Controller
     public function edit($id)
     {
         $income = Income::findOrFail($id);
+        $projects = Project::all();
 
-        return view('income.edit', compact('income'));
+        return view('income.edit', compact('income','projects'));
     }
 
     /**
