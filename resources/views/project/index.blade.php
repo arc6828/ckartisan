@@ -49,8 +49,8 @@
                                             <div>Owner : {{ $item->user->name }}</div>
                                         </td>
                                         @if(Auth::user()->profile->role == "admin")             
-                                        <td>0</td>
-                                        <td>{{ $item->paid_fastworks->sum('price') }}</td>
+                                        <td>{{ number_format($item->income->sum('total')) }}</td>
+                                        <td>{{ number_format($item->paid_fastworks->sum('price')) }}</td>
                                         @endif
                                         <td class="d-none">
                                             <a class="d-none" href="{{ url('/project/' . $item->id)  }}" title="View Project"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>

@@ -33,7 +33,7 @@
                                         <th>#</th>
                                         <th>Title</th>
                                         <th>Total</th>
-                                        <th>Receipt</th><th class="d-none" >Actions</th>
+                                        <th>Receipt</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,15 +51,14 @@
                                         </td>
                                         <td>{{ $item->total }}</td>                                        
                                         <td>
-                                            {{ $item->receipt }}
                                             @if( isset($item->receipt) )
                                                 <a href="{{ url('storage') }}/{{ $item->receipt }}" target="_blank">
                                                     <img src="{{ url('storage') }}/{{ $item->receipt }}"  width="70" />
                                                 </a>
                                             @endif  
                                         </td>
-                                        <td class="d-none" >
-                                            <a href="{{ url('/income/' . $item->id) }}" title="View Income"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                        <td >
+                                            <a class="d-none"  href="{{ url('/income/' . $item->id) }}" title="View Income"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/income/' . $item->id . '/edit') }}" title="Edit Income"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
                                             <form method="POST" action="{{ url('/income' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
