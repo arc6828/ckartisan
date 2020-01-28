@@ -28,6 +28,11 @@
                             นักพัฒนา
                         </a>
                     </li>
+                    <li role="presentation">
+                        <a href="{{ url('/project') }}">
+                            Project
+                        </a>
+                    </li>
                     @endif
                 @endif
             </ul>

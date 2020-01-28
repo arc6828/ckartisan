@@ -31,7 +31,11 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th><th>Photo</th><th>Title</th>
-                                        <th>Begin Date</th><th>Deadline</th><th>Complete Date</th><th>Owner</th><th class="d-none">Actions</th>
+                                        @if(Auth::user()->profile->role == "admin")     
+                                        <th>Income</th>
+                                        <th>Pay</th>
+                                        @endif
+                                        <th class="d-none">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -39,9 +43,15 @@
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td><img src="{{ url("/")."/storage/".(isset($item->photo)? $item->photo : "images/noimage.png") }}" width="100" /></td>
-                                        <td><a href="{{ url('/project/' . $item->id) }}">{{ $item->title }} ({{ $item->type }})</a></td>
-                                        <td>{{ $item->begin_date }}</td><td>{{ $item->deadline }}</td><td>{{ $item->complete_date }}</td>
-                                        <td>{{ $item->user->name }}</td>
+                                        <td>
+                                            <div><a href="{{ url('/project/' . $item->id) }}">{{ $item->title }} ({{ $item->type }})</a></div>
+                                            <div>{{ $item->begin_date }} - {{ $item->deadline }} - {{ $item->complete_date }}</div>
+                                            <div>Owner : {{ $item->user->name }}</div>
+                                        </td>
+                                        @if(Auth::user()->profile->role == "admin")             
+                                        <td>0</td>
+                                        <td>{{ $item->paid_fastworks->sum('price') }}</td>
+                                        @endif
                                         <td class="d-none">
                                             <a class="d-none" href="{{ url('/project/' . $item->id)  }}" title="View Project"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a class="d-none" href="{{ url('/project/' . $item->id . '/edit') }}" title="Edit Project"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
