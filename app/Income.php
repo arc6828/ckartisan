@@ -27,5 +27,13 @@ class Income extends Model
      */
     protected $fillable = ['title', 'remark', 'project_id', 'user_id', 'total', 'paid_date', 'receipt'];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User','user_id');
+    }
     
+    public function project()
+    {
+        return $this->belongsTo('App\Project','project_id');
+    }
 }
