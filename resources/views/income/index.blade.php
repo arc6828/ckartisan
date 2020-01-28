@@ -30,15 +30,35 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Title</th><th>Remark</th><th>Project Id</th><th>User Id</th><th>Total</th><th>Paid Date</th><th>Receipt</th><th>Actions</th>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Total</th>
+                                        <th>Receipt</th><th class="d-none" >Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($income as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->title }}</td><td>{{ $item->remark }}</td><td>{{ $item->project_id }}</td><td>{{ $item->user_id }}</td><td>{{ $item->total }}</td><td>{{ $item->paid_date }}</td><td>{{ $item->receipt }}</td>
                                         <td>
+                                            <div>
+                                                <a href="{{ url('/income/' . $item->id) }}" title="View Income">{{ $item->title }}</a>                                          
+                                                
+                                            </div>
+                                            <div>Project : {{ $item->project->title }}</div>
+                                            <div>ผู้รับเงิน : {{ $item->user->name }}</div>
+                                            <div>วันที่รับเงิน : {{ $item->paid_date }}</div>
+                                        </td>
+                                        <td>{{ $item->total }}</td>                                        
+                                        <td>
+                                            {{ $item->receipt }}
+                                            @if( isset($item->receipt) )
+                                                <a href="{{ url('storage') }}/{{ $item->receipt }}" target="_blank">
+                                                    <img src="{{ url('storage') }}/{{ $item->receipt }}"  width="70" />
+                                                </a>
+                                            @endif  
+                                        </td>
+                                        <td class="d-none" >
                                             <a href="{{ url('/income/' . $item->id) }}" title="View Income"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/income/' . $item->id . '/edit') }}" title="Edit Income"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
