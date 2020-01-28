@@ -45,6 +45,7 @@
                                             <div><a href="{{ url('/') }}/user/{{ $item->user_id }}">{{ $item->user->name }}</a></div>
                                             <div>{{ $item->user->email }}</div>
                                             <div>{{ $item->role }}</div>
+                                            <div>ที่ค้างชำระ : <span class="badge badge-pill badge-danger">{{ number_format($item->completed_fastworks->sum('price')) }}</span></div>
                                         </td>
                                         <td>
                                             <div>{{ $item->bank_name }}</div>
