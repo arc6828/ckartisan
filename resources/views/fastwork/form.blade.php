@@ -49,9 +49,9 @@
 </div>
 <div class="form-group {{ $errors->has('developer_id') ? 'has-error' : ''}}">
     <label for="developer_id" class="control-label">{{ 'Developer' }}</label>
-    <input class="form-control" name="developer_name" type="text" id="developer_name" value="{{ isset($fastwork->developer->name) ? $fastwork->developer->name : ''}}" disabled>
-    <input class="form-control" name="developer_id" type="hidden" id="developer_id" value="{{ isset($fastwork->developer_id) ? $fastwork->developer_id : ''}}" disabled>
+    
     <select class="form-control" name="developer_id" id="developer_id">
+        <option value="" >None</option>
         @php
           $developer_id = isset($fastwork->developer_id) ? $fastwork->developer_id : '';
         @endphp
