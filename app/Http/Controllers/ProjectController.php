@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Project;
+use App\Payment;
+use App\Income;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -33,8 +35,10 @@ class ProjectController extends Controller
         } else {
             $project = Project::latest()->paginate($perPage);
         }
+        $incomes = Income::all();
+        $payments = Payment::all();
 
-        return view('project.index', compact('project'));
+        return view('project.index', compact('project','incomes','payments'));
     }
 
     /**
