@@ -71,6 +71,7 @@ class PaymentController extends Controller
         if ($request->hasFile('receipt')) {
             $requestData['receipt'] = $request->file('receipt')
                 ->store('uploads', 'public');
+            $requestData['paid_at'] = date("Y-m-d H:i:s");
         }
 
         $payment = Payment::create($requestData);
