@@ -36,7 +36,8 @@
                                     <tr><th> Owner </th><td> {{ $project->user->name }} </td></tr>
                                     @if(Auth::user()->profile->role == "admin")             
                                     <tr><th>งบประมาณสะสม (บาท) </th><td>{{ number_format($project->incomes->sum('total')) }}</td></tr>
-                                    <tr><th>ที่เบิกจ่าย (บาท)  </th><td>{{ number_format($project->paid_fastworks->sum('price')) }}</td></tr>
+                                    <tr><th>ที่เบิกจ่าย (บาท)  </th><td>{{ number_format($project->paid_fastworks->sum('price')) }}</td></tr>                                    
+                                    <tr><th>ที่รอเรียกเก็บ (บาท)  </th><td>{{ number_format($project->paid_fastworks->sum('price') - $project->incomes->sum('total') ) }}</td></tr>
                                     @endif
                                     <tr><th> Type </th><td> {{ $project->type }} </td></tr>
                                     <tr><th> Remark </th><td> {{ $project->remark }} </td></tr>
