@@ -49,7 +49,7 @@
                                             <div>Owner : {{ $item->user->name }}</div>
                                         </td>
                                         @if(Auth::user()->profile->role == "admin")             
-                                        <td>{{ number_format($item->income->sum('total')) }}</td>
+                                        <td>{{ number_format($item->incomes->sum('total')) }}</td>
                                         <td>{{ number_format($item->paid_fastworks->sum('price')) }}</td>
                                         @endif
                                         <td class="d-none">
