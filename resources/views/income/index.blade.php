@@ -49,7 +49,7 @@
                                             <div>ผู้รับเงิน : {{ $item->user->name }}</div>
                                             <div>วันที่รับเงิน : {{ $item->paid_date }}</div>
                                         </td>
-                                        <td>{{ $item->total }}</td>                                        
+                                        <td>{{ number_format($item->total) }}</td>                                        
                                         <td>
                                             @if( isset($item->receipt) )
                                                 <a href="{{ url('storage') }}/{{ $item->receipt }}" target="_blank">

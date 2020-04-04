@@ -50,7 +50,7 @@
                                             
                                             <div class="text-danger">{{ $item->remark }}</div>
                                         </td>
-                                        <td>{{ $item->total }}</td>
+                                        <td>{{ number_format($item->total) }}</td>
                                         <td>               
                                             <div>{{ $item->paid_at }}</div>
                                             @if( isset($item->receipt) )
