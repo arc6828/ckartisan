@@ -22,7 +22,7 @@ class Profile extends Model
         return $this->hasMany('App\Fastwork', 'developer_id', 'user_id')
             ->join('projects','fastworks.project_id','=','projects.id')
             ->where('type','part-time')
-            ->where('status','completed')
+            ->where('fastworks.status','completed')
             ->orderBy('created_at', 'desc')
             ->select('fastworks.*');  
     }
