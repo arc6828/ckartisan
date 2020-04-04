@@ -41,6 +41,10 @@ class Project extends Model
     {
         return $this->hasMany('App\Fastwork', 'project_id')->where('status','paid')->orderBy('created_at', 'desc');  
     }
+    public function reserved_fastworks()
+    {
+        return $this->hasMany('App\Fastwork', 'project_id')->where('status','reserved')->orderBy('created_at', 'desc');  
+    }
     public function incomes()
     {
         return $this->hasMany('App\Income', 'project_id')->orderBy('created_at', 'desc');  

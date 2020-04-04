@@ -33,7 +33,8 @@
                                         <th>ID</th><th>Photo</th><th>Title</th>
                                         @if(Auth::user()->profile->role == "admin")     
                                         <th>Income <br/> <span class="badge badge-pill badge-success"> {{ number_format($incomes->sum('total'))  }} </span></th>
-                                        <th>Pay <br/><span class="badge badge-pill badge-danger">{{ number_format($payments->sum('total')) }}</span></th>
+                                        <th>Pay <br/><span class="badge badge-pill badge-danger">{{ number_format($payments->sum('total')) }}</span></th>                                        
+                                        <th>Reserved <br/><span class="badge badge-pill badge-warning">{{ number_format($fastworks->where('status','reserved')->sum('price')) }}</span></th>
                                         @endif
                                         <th class="d-none">Actions</th>
                                     </tr>
@@ -51,6 +52,7 @@
                                         @if(Auth::user()->profile->role == "admin")             
                                         <td>{{ number_format($item->incomes->sum('total')) }}</td>
                                         <td>{{ number_format($item->paid_fastworks->sum('price')) }}</td>
+                                        <td>{{ number_format($item->reserved_fastworks->sum('price')) }}</td>
                                         @endif
                                         <td class="d-none">
                                             <a class="d-none" href="{{ url('/project/' . $item->id)  }}" title="View Project"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
