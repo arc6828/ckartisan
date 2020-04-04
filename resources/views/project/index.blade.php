@@ -52,7 +52,7 @@
                                             <div>Owner : {{ $item->user->name }}</div>
                                         </td>
                                         <td>
-                                            @switch($item->created)
+                                            @switch($item->status)
                                                 @case("created")
                                                     <span class="badge badge-pill badge-primary">in progress</span>
                                                     @break 
