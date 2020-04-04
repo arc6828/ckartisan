@@ -30,7 +30,9 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Photo</th><th>Title</th>
+                                        <th>ID</th><th>Photo</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
                                         @if(Auth::user()->profile->role == "admin")     
                                         <th>Income <br/> <span class="badge badge-pill badge-success"> {{ number_format($incomes->sum('total'))  }} </span></th>
                                         <th>Pay <br/><span class="badge badge-pill badge-danger">{{ number_format($payments->sum('total')) }}</span></th>                                        
@@ -48,6 +50,17 @@
                                             <div><a href="{{ url('/project/' . $item->id) }}">{{ $item->title }} ({{ $item->type }})</a></div>
                                             <div>{{ $item->begin_date }} - {{ $item->deadline }} - {{ $item->complete_date }}</div>
                                             <div>Owner : {{ $item->user->name }}</div>
+                                        </td>
+                                        <td>
+                                            @switch($item->created)
+                                                @case("created")
+                                                    <span class="badge badge-pill badge-primary">in progress</span>
+                                                    @break 
+                                                @case("completed")
+                                                    <span class="badge badge-pill badge-success">completed</span>
+                                                    @break
+                                            @endswitch
+                                            
                                         </td>
                                         @if(Auth::user()->profile->role == "admin")             
                                         <td>{{ number_format($item->incomes->sum('total')) }}</td>

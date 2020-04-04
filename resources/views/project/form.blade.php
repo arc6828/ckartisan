@@ -46,6 +46,17 @@
     </select>
     {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
+    <label for="photo" class="control-label">{{ 'Status' }}</label>
+    <select class="form-control" name="status" id="status" >
+      @foreach(["created","completed"] as $status)
+        <option value="{{ $status }}" {{ (isset($project->status) && $project->status == $status) ? 'selected' : ''}}>
+          {{ $status }}
+        </option>
+      @endforeach
+    </select>
+    {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group {{ $errors->has('photo') ? 'has-error' : ''}}">
     <label for="photo" class="control-label">{{ 'Photo' }}</label>
     <input class="form-control" name="photo" type="file" id="photo" value="{{ isset($project->photo) ? $project->photo : ''}}" >

@@ -25,7 +25,7 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'content', 'begin_date', 'deadline', 'complete_date', 'user_id', 'remark', 'photo','type'];
+    protected $fillable = ['title', 'content', 'begin_date', 'deadline', 'complete_date', 'user_id', 'remark', 'photo','type','status'];
 
     public function user()
     {

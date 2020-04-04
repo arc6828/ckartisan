@@ -29,6 +29,7 @@ class ProjectController extends Controller
                 ->orWhere('content', 'LIKE', "%$keyword%")
                 ->orWhere('begin_date', 'LIKE', "%$keyword%")
                 ->orWhere('deadline', 'LIKE', "%$keyword%")
+                ->orWhere('status', 'LIKE', "%$keyword%")
                 ->orWhere('complete_date', 'LIKE', "%$keyword%")
                 ->orWhere('user_id', 'LIKE', "%$keyword%")
                 ->orWhere('remark', 'LIKE', "%$keyword%")
