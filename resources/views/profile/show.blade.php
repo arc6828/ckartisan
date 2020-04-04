@@ -46,6 +46,7 @@
                     </div>
                 </div>
 
+                @if(Auth::id() == $profile->user_id || Auth::user()->profile->role == "admin" )
                 <div class="row">
                     <div class="col-md-6"> 
                         <div class="card mt-4">
@@ -68,6 +69,7 @@
                         </div>  
                     </div>
                 </div>
+                @endif
 
                 
 

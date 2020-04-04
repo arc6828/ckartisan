@@ -38,8 +38,10 @@
                                     <tr><th> Project Id </th><td> {{ $fastwork->project->title }} </td></tr>
                                     <tr><th> Project Owner </th><td> {{ $fastwork->user->name }} </td></tr>
                                     <tr><th> Hours </th><td> {{ $fastwork->hours }} </td></tr>
+                                    @if(Auth::id() == $profile->user_id || Auth::user()->profile->role == "admin" )
                                     <tr><th> Price Per Hour </th><td> {{ $fastwork->price_per_hour }} </td></tr>
                                     <tr><th> Price </th><td> {{ $fastwork->price }} </td></tr>
+                                    @endif
                                     <tr><th> Remark </th><td> {{ $fastwork->remark }} </td></tr>
                                     <tr><th> Photo </th>
                                         <td> 
