@@ -92,7 +92,8 @@ class FastworkController extends Controller
         //RESERVED WHEN CREATED
         if(!empty($requestData['developer_id']))
         {
-            $status = "reserved";
+            $requestData['status'] = "reserved";   
+            $status = $requestData['status'];
             switch( $status ){
                 case "reserved" : 
                     $requestData['reserved_at'] = date('Y-m-d H:i:s');
