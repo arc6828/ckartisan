@@ -88,7 +88,17 @@ class FastworkController extends Controller
             }            
 
         }
-        $requestData['status'] = "created";        
+        $requestData['status'] = "created";   
+        //RESERVED WHEN CREATED
+        if(!empty($requestData['developer_id']))
+        {
+            $status = "reserved";
+            switch( $status ){
+                case "reserved" : 
+                    $requestData['reserved_at'] = date('Y-m-d H:i:s');
+                    break;
+            }
+        }   
 
         Fastwork::create($requestData);
 
