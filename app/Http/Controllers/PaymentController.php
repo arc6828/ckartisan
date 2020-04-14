@@ -81,7 +81,7 @@ class PaymentController extends Controller
         if( $user_id ){
             $data = [
                 'payment_id' => $payment->id ,
-                'status' => "paid" ,
+                'fastworks.status' => "paid" ,
                 'paid_at' => date("Y-m-d H:i:s") ,
             ];
             $fastworks = Fastwork::join('projects','fastworks.project_id','=','projects.id')
