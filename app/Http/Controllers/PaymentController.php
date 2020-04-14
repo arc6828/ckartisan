@@ -86,7 +86,7 @@ class PaymentController extends Controller
             ];
             $fastworks = Fastwork::join('projects','fastworks.project_id','=','projects.id')
                 ->where('type','part-time')
-                ->where('status','completed')
+                ->where('fastworks.status','completed')
                 ->where('developer_id', $requestData['user_id'])
                 ->select('fastworks.*')
                 ->update( $data );
