@@ -69,6 +69,86 @@
                         </div>  
                     </div>
                 </div>
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+                @php
+                    $projects = [];
+                    
+                    foreach ($profile->fastworks as $fastwork){
+                        $projects[$fastwork->project->title] = [
+                            $profile->fastworks->where('status','paid')->where('project_id',$fastwork->project->id)->sum('price'),
+                            $profile->fastworks->where('status','reserved')->where('project_id',$fastwork->project->id)->sum('price'),
+                        ];
+                    }
+                    print_r($projects);
+                    $project_keys = array_keys($projects);
+                    $project_values_paid = array_map(function($values){
+                        //print_r($values);
+                        return ($values[0]);
+                    }, array_values($projects));
+                    $project_values_reserved = array_map(function($values){
+                        return ($values[1]);
+                    },array_values($projects));
+                    //echo "<br>";
+                    //print_r($project_values_paid);
+                    //echo "<br>";
+                    //print_r($project_values_reserved);
+                @endphp
+                <div class="row">                    
+                    <div class="col-md-12">                         
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <canvas id="myChart2" width="100" height="30"></canvas>
+                                <script>
+                                    var ctx = document.getElementById('myChart2');
+                                    var myBarChart = new Chart(ctx, {
+                                        "type": "horizontalBar",
+                                        "data": {
+                                            "labels": @json($project_keys) ,
+                                            "datasets": [{
+                                                    "label": 'Paid' ,
+                                                    "data": @json($project_values_paid) ,
+                                                    "fill": false,
+                                                    "backgroundColor": "#007bff",
+                                                    //"backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
+                                                    //"borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
+                                                    //"borderWidth": 1
+                                                },
+                                                {
+                                                    "label": 'Reserved' ,
+                                                    "data": @json($project_values_reserved) ,
+                                                    "fill": false,
+                                                    "backgroundColor": "#dc3545",
+                                                    //"backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
+                                                    //"borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
+                                                    //"borderWidth": 1
+                                                }
+                                            ]
+                                        },
+                                        "options": {
+                                            "scales": {
+                                                "xAxes": [
+                                                    {
+                                                        "ticks": {
+                                                            "beginAtZero": true
+                                                        },
+                                                        stacked: true
+                                                    }
+                                                ],
+                                                "yAxes": [{
+                                                    stacked: true
+                                                }]
+                                            },
+                                            legend: {
+                                                //display: false
+                                            },
+                                        }
+                                    });
+                                
+                                </script>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
                 @endif
 
                 
