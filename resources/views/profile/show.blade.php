@@ -52,7 +52,7 @@
                         <div class="card mt-4">
                             <div class="card-body text-center">
                                 <h1 class="card-title">
-                                    {{ $profile->completed_part_time_fastworks->where('status','completed')->sum('price') }}
+                                    {{ $profile->reserved_part_time_fastworks->sum('price') }}
                                 </h1>
                                 <p class="card-text">รายได้ที่คาดว่าจะได้รับ</p>
                             </div>
