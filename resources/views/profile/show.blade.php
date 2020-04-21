@@ -79,7 +79,7 @@
                             $profile->fastworks->where('status','reserved')->where('project_id',$fastwork->project->id)->sum('price'),
                         ];
                     }
-                    print_r($projects);
+                    //print_r($projects);
                     $project_keys = array_keys($projects);
                     $project_values_paid = array_map(function($values){
                         //print_r($values);
