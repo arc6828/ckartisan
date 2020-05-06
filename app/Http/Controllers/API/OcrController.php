@@ -86,20 +86,108 @@ class OcrController extends Controller
                 $url = url('/')."/storage/uploads/ocr/".$filename;
                 //echo "<br>".$url;
                 //echo "<br>"."<img src='{$url}' />";
+                
+                //GOOGLE VISION API
+                $path = storage_path('app/public/'.$requestData['photo']);
+                //echo $path;
+                $detected_text = $this->detect_text2($path);
+
+                //$requestData['title'] = $detected_text['title'];
+                //$requestData['content'] = $detected_text['content'];
+                
+                //CREATE OCR
                 $data = [
                     "title" => "Line : api/ocr",
-                    "content" => "",
+                    "content" => $detected_text['content'],
                     "photo" => "uploads/ocr/".$filename,
                 ];
                 Ocr::create($data);
+
                 
                 
                 $this->replyToUser($event, $channel_access_token);
                 break;
-        }
-        
+        }      
         
 
+    }
+
+
+    function detect_text2($path)
+    {
+        //https://onlinelearningportal.website/google-vision-api-implementation-with-laravel-5-8/
+        $key_path = storage_path('../public/CKartisan-c6f07fc70d07.json');
+        $vision = new VisionClient(['keyFile' => json_decode(file_get_contents($key_path), true)]); 
+        
+        $image = $vision->image(file_get_contents($path), 
+        [
+            'TEXT_DETECTION'
+        ]);
+        
+        $result = $vision->annotate($image);
+        //print_r($result); exit;
+        $texts = $result->text();
+        $title = null;
+        $description=[];
+        $first = true;
+        if($texts){
+            foreach($texts as $key=>$text)
+            {
+                if($first) {$first = false; continue;}
+                $description[]=$text->description();
+                //GET CLEAN DATA 
+                $temp = $this->cleanNumber($text->description());
+                //ถ้าได้ตัวเลขน้อยกว่าเดิม ให้บันทึก
+                if($temp){
+                    if($title){
+                        if($temp < $title){
+                            $title = $temp;
+                        }
+                    }else{
+                        $title = $temp;
+                    }
+                }
+
+                //echo $text->description() ;
+                //print_r($text->info());
+                /*$bounds = [];
+                foreach ($text->boundingPoly()['vertices'] as $vertex) {
+                    $bounds[] = sprintf('(%d,%d)', $vertex['x'], $vertex['y']);
+                }
+                print('Bounds: ' . join(', ',$bounds) . PHP_EOL);*/
+                //echo "<br>";
+            }
+        }
+        return [
+            "title" => $title,
+            "content" => json_encode($description, JSON_UNESCAPED_UNICODE ),
+        ];
+        // fetch text from image //
+        //print_r($description);    
+
+    }
+
+    function cleanNumber($text){
+        //REMOVE E
+        $text = str_replace("E","",$text);
+        //REMOVE .
+        $text = str_replace(".","",$text);
+        //REMOVE SPACEBAR
+        $text = str_replace(" ","",$text);
+        //CONVERT to float
+        $number = floatval($text);
+        if($number){
+            return $number;
+            //CONVERT to int
+            $number = intval($number);
+            if($number){
+                //divisible with 10 but not 0
+                if($number % 10 == 0){
+                    return $number;
+                }
+            }            
+        }        
+        return false;
     }
 
     public function replyToUser($event, $channel_access_token){
