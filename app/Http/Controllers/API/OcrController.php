@@ -115,7 +115,7 @@ class OcrController extends Controller
             "messages" => [
                 [
                     "type" => "text",
-                    "text"=> "Thank you for submitting image"
+                    "text"=> "Thank you for submitting image, ขอบคุณ"
                 ]
             ],
         ];
@@ -125,7 +125,7 @@ class OcrController extends Controller
                 'method'  => 'POST',
                 'header'  => "Content-Type: application/json \r\n".
                             'Authorization: Bearer '.$channel_access_token,
-                'content' => $body,
+                'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
                 //'timeout' => 60
             ]
         ];
@@ -134,6 +134,8 @@ class OcrController extends Controller
         //https://api-data.line.me/v2/bot/message/11914912908139/content
         $url = "https://api.line.me/v2/bot/message/reply";
         $result = file_get_contents($url, false, $context);
+
+        //SAVE LOG
         $data = [
             "title" => "https://api.line.me/v2/bot/message/reply",
             "content" => json_encode($result, JSON_UNESCAPED_UNICODE),
