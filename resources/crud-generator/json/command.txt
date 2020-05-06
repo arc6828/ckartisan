@@ -11,3 +11,5 @@ php artisan crud:generate FastworkStatus --fields_from_file="resources/crud-gene
 php artisan crud:generate Payment --fields_from_file="resources/crud-generator/json/payment.json"
 
 php artisan crud:generate Income --fields_from_file="resources/crud-generator/json/income.json"
+
+php artisan crud:generate MyLog --fields_from_file="resources/crud-generator/json/mylog.json"

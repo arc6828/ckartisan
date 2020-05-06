@@ -56,3 +56,5 @@ Route::get('/img', function()
 
     return $img->response('jpg');
 });
+
+Route::resource('my-log', 'MyLogController');
