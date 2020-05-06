@@ -83,14 +83,14 @@ class OcrController extends Controller
                 $new_path = storage_path('app/public/uploads/ocr/'.$filename);
                 Image::make($binary_data)->save($new_path);
                 //echo 'uploads/ocr/'.$filename;
-                $url = url('/')."/storage/uploads/ocr/".$filename;
+                //$url = url('/')."/storage/uploads/ocr/".$filename;
                 //echo "<br>".$url;
                 //echo "<br>"."<img src='{$url}' />";
                 
                 //GOOGLE VISION API
-                $path = storage_path('app/public/'.$requestData['photo']);
+                //$path = storage_path('app/public/'.$requestData['photo']);
                 //echo $path;
-                $detected_text = $this->detect_text2($path);
+                $detected_text = $this->detect_text2($new_path);
 
                 //$requestData['title'] = $detected_text['title'];
                 //$requestData['content'] = $detected_text['content'];
