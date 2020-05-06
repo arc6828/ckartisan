@@ -108,7 +108,7 @@ class OcrController extends Controller
 
                 
                 
-                $this->replyToUser($event, $channel_access_token);
+                $this->replyToUser($data,$event, $channel_access_token);
                 break;
         }      
         
@@ -193,7 +193,7 @@ class OcrController extends Controller
         return false;
     }
 
-    public function replyToUser($event, $channel_access_token){
+    public function replyToUser($data, $event, $channel_access_token){
         /*
         $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('<channel access token>');
         $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
@@ -208,7 +208,7 @@ class OcrController extends Controller
             "messages" => [
                 [
                     "type" => "text",
-                    "text"=> "Thank you for submitting image, ขอบคุณ"
+                    "text"=> "ขอบคุณสำหรับข้อมูล ". $data['content']
                 ]
             ],
         ];
