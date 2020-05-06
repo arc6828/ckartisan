@@ -35,12 +35,44 @@ class OcrController extends Controller
         //USE TO VERIFY YOURSELF
         $channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
         
+        $first_event = $requestData["events"][0];
+        $messeage = $first_event["message"];
+        
+        switch($message["type"]){
+            case "image" : 
+                $binary_data  = $this->getImageFromLine($messeage["id"], $channel_access_token);
+                //$binary_data = file_get_contents($location);
+                $im = imagecreatefromstring($binary_data);
+                $width = imagesx($im);
+                $height = imagesy($im);
+                $requestData["width"] = $width;
+                $requestData["height"] = $height;
+                break;
+        }
+        
         $data = [
             "title" => "Test",
             "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
         ];
         MyLog::create($data);
 
+    }
+
+    public function getImageFromLine($id, $channel_access_token){
+        $opts = array('http' =>[
+                'method'  => 'GET',
+                //'header'  => "Content-Type: text/xml\r\n".
+                'header' => 'Authorization: Bearer '.$channel_access_token,
+                //'content' => $body,
+                //'timeout' => 60
+            ]
+        );
+                            
+        $context  = stream_context_create($opts);
+        https://api-data.line.me/v2/bot/message/11914912908139/content
+        $url = "https://api-data.line.me/v2/bot/message/{$id}/content";
+        $result = file_get_contents($url, false, $context);
+        return $result;
     }
 
     public function test(Request $request)
