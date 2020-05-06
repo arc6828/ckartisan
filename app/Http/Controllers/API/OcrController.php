@@ -5,6 +5,10 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\MyLog;
+use App\Ocr;
+
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class OcrController extends Controller
 {
@@ -15,7 +19,31 @@ class OcrController extends Controller
      */
     public function index()
     {
-        //
+        $channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
+        
+        $result = $this->getImageFromLine("11914912908139", $channel_access_token);
+        
+        //header('Content-Type: image/jpeg');
+        //echo $result;
+
+        //echo Image::make($result)->mime();
+         $this->random_string(50);
+        //$size = $image->filesize();            
+        
+        $filename = $this->random_string(50).".png";
+        $new_path = storage_path('app/public/uploads/ocr/'.$filename);
+        
+        /*
+        Image::make($result)->save($new_path);
+        echo 'uploads/ocr/'.$filename;
+        $url = url('/')."/storage/uploads/ocr/".$filename;
+        echo "<br>".$url;
+        echo "<br>"."<img src='{$url}' />";
+        */
+        
+
+        //$img64 = base64_encode($result);
+        //echo "img src='{$img64}'";
     }
 
     /**
@@ -41,12 +69,20 @@ class OcrController extends Controller
         switch($message["type"]){
             case "image" : 
                 $binary_data  = $this->getImageFromLine($messeage["id"], $channel_access_token);
-                //$binary_data = file_get_contents($location);
-                /*$im = imagecreatefromstring($binary_data);
-                $width = imagesx($im);
-                $height = imagesy($im);
-                $requestData["width"] = $width;
-                $requestData["height"] = $height;*/
+                
+                $filename = $this->random_string(50).".png";
+                $new_path = storage_path('app/public/uploads/ocr/'.$filename);
+                Image::make($result)->save($new_path);
+                //echo 'uploads/ocr/'.$filename;
+                $url = url('/')."/storage/uploads/ocr/".$filename;
+                //echo "<br>".$url;
+                //echo "<br>"."<img src='{$url}' />";
+                $data = [
+                    "title" => "Line : api/ocr",
+                    "content" => "",
+                    "photo" => "uploads/ocr/".$filename,
+                ];
+                Ocr::create();
                 break;
         }
         
@@ -73,6 +109,17 @@ class OcrController extends Controller
         $url = "https://api-data.line.me/v2/bot/message/{$id}/content";
         $result = file_get_contents($url, false, $context);
         return $result;
+    }
+
+    public function random_string($length) {
+        $key = '';
+        $keys = array_merge(range(0, 9), range('a', 'z'));
+    
+        for ($i = 0; $i < $length; $i++) {
+            $key .= $keys[array_rand($keys)];
+        }
+    
+        return $key;
     }
 
     public function test(Request $request)
