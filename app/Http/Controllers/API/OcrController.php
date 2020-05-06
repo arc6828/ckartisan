@@ -42,11 +42,11 @@ class OcrController extends Controller
             case "image" : 
                 $binary_data  = $this->getImageFromLine($messeage["id"], $channel_access_token);
                 //$binary_data = file_get_contents($location);
-                $im = imagecreatefromstring($binary_data);
+                /*$im = imagecreatefromstring($binary_data);
                 $width = imagesx($im);
                 $height = imagesy($im);
                 $requestData["width"] = $width;
-                $requestData["height"] = $height;
+                $requestData["height"] = $height;*/
                 break;
         }
         
