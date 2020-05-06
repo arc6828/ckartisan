@@ -29,6 +29,12 @@ class OcrController extends Controller
         //
         $requestData = $request->all();
         //$content = json_decode(json_encode($requestData, JSON_UNESCAPED_UNICODE));
+        
+        $bearerToken = $request->bearerToken();
+        echo $bearerToken;
+        //USE TO VERIFY YOURSELF
+        $channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
+        
         $data = [
             "title" => "Test",
             "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
