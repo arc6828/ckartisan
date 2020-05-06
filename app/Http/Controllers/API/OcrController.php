@@ -70,7 +70,7 @@ class OcrController extends Controller
         $channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
         
         $first_event = $requestData["events"][0];
-        $messeage = $first_event["message"];
+        $message = $first_event["message"];
         
         switch($message["type"]){
             case "image" : 
