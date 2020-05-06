@@ -72,7 +72,7 @@ class OcrController extends Controller
                 
                 $filename = $this->random_string(50).".png";
                 $new_path = storage_path('app/public/uploads/ocr/'.$filename);
-                Image::make($result)->save($new_path);
+                Image::make($binary_data)->save($new_path);
                 //echo 'uploads/ocr/'.$filename;
                 $url = url('/')."/storage/uploads/ocr/".$filename;
                 //echo "<br>".$url;
@@ -82,7 +82,7 @@ class OcrController extends Controller
                     "content" => "",
                     "photo" => "uploads/ocr/".$filename,
                 ];
-                Ocr::create();
+                Ocr::create($data);
                 break;
         }
         
