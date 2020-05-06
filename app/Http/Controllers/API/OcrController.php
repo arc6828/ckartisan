@@ -33,6 +33,7 @@ class OcrController extends Controller
             "content" => json_encode($requestData),
         ];
         MyLog::create($data);
+        
     }
 
     public function test(Request $request)
