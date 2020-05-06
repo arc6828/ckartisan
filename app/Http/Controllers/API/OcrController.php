@@ -28,12 +28,13 @@ class OcrController extends Controller
     {
         //
         $requestData = $request->all();
+        //$content = json_decode(json_encode($requestData, JSON_UNESCAPED_UNICODE));
         $data = [
             "title" => "Test",
-            "content" => json_encode($requestData),
+            "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
         ];
         MyLog::create($data);
-        
+
     }
 
     public function test(Request $request)
