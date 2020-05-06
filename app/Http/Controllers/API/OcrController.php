@@ -12,6 +12,8 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class OcrController extends Controller
 {
+    public $channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
+        
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +21,8 @@ class OcrController extends Controller
      */
     public function index()
     {
-        $channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
         
-        $result = $this->getImageFromLine("11914912908139", $channel_access_token);
+        $result = $this->getImageFromLine("11914912908139", $this->channel_access_token);
         
         //header('Content-Type: image/jpeg');
         //echo $result;
@@ -57,7 +58,7 @@ class OcrController extends Controller
         //
         $requestData = $request->all();
         $data = [
-            "title" => "Test",
+            "title" => "Line : api/ocr",
             "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
         ];
         MyLog::create($data);
@@ -67,7 +68,8 @@ class OcrController extends Controller
         //$bearerToken = $request->bearerToken();
         //echo $bearerToken;
         //USE TO VERIFY YOURSELF
-        $channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
+        //$channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
+        $channel_access_token = $this->channel_access_token;
         
         $first_event = $requestData["events"][0];
         $message = $first_event["message"];
@@ -89,10 +91,55 @@ class OcrController extends Controller
                     "photo" => "uploads/ocr/".$filename,
                 ];
                 Ocr::create($data);
+                
+                replyToUser($event, $channel_access_token);
                 break;
         }
         
         
+
+    }
+
+    public function replyToUser($event, $channel_access_token){
+        /*
+        $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('<channel access token>');
+        $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
+
+        $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
+        $response = $bot->replyMessage('<replyToken>', $textMessageBuilder);
+
+        echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
+        */
+        $body = [
+            "replyToken" => $event["replyToken"],
+            "messages" => [
+                [
+                    "type" => "text",
+                    "text"=> "Thank you for submitting image"
+                ]
+            ],
+        ];
+
+        $opts = [
+            'http' =>[
+                'method'  => 'POST',
+                'header'  => "Content-Type: application/json \r\n".
+                            'Authorization: Bearer '.$channel_access_token,
+                'content' => $body,
+                //'timeout' => 60
+            ]
+        ];
+                            
+        $context  = stream_context_create($opts);
+        //https://api-data.line.me/v2/bot/message/11914912908139/content
+        $url = "https://api.line.me/v2/bot/message/reply";
+        $result = file_get_contents($url, false, $context);
+        $data = [
+            "title" => "https://api.line.me/v2/bot/message/reply",
+            "content" => json_encode($result, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data);
+        return $result;
 
     }
 
@@ -107,7 +154,7 @@ class OcrController extends Controller
         );
                             
         $context  = stream_context_create($opts);
-        https://api-data.line.me/v2/bot/message/11914912908139/content
+        //https://api-data.line.me/v2/bot/message/11914912908139/content
         $url = "https://api-data.line.me/v2/bot/message/{$id}/content";
         $result = file_get_contents($url, false, $context);
         return $result;
