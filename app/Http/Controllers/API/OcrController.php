@@ -92,7 +92,7 @@ class OcrController extends Controller
                 ];
                 Ocr::create($data);
                 
-                replyToUser($event, $channel_access_token);
+                $this->replyToUser($event, $channel_access_token);
                 break;
         }
         
