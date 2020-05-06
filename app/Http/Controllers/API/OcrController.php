@@ -56,6 +56,12 @@ class OcrController extends Controller
     {
         //
         $requestData = $request->all();
+        $data = [
+            "title" => "Test",
+            "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data);
+
         //$content = json_decode(json_encode($requestData, JSON_UNESCAPED_UNICODE));
         
         //$bearerToken = $request->bearerToken();
@@ -68,7 +74,7 @@ class OcrController extends Controller
         
         switch($message["type"]){
             case "image" : 
-                $binary_data  = $this->getImageFromLine($messeage["id"], $channel_access_token);
+                $binary_data  = $this->getImageFromLine($message["id"], $channel_access_token);
                 
                 $filename = $this->random_string(50).".png";
                 $new_path = storage_path('app/public/uploads/ocr/'.$filename);
@@ -86,11 +92,7 @@ class OcrController extends Controller
                 break;
         }
         
-        $data = [
-            "title" => "Test",
-            "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data);
+        
 
     }
 
