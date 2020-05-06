@@ -71,8 +71,9 @@ class OcrController extends Controller
         //$channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
         $channel_access_token = $this->channel_access_token;
         
-        $first_event = $requestData["events"][0];
-        $message = $first_event["message"];
+        //GET FIRST EVENT
+        $event = $requestData["events"][0];
+        $message = $event["message"];
         
         switch($message["type"]){
             case "image" : 
@@ -91,6 +92,7 @@ class OcrController extends Controller
                     "photo" => "uploads/ocr/".$filename,
                 ];
                 Ocr::create($data);
+                
                 
                 $this->replyToUser($event, $channel_access_token);
                 break;
