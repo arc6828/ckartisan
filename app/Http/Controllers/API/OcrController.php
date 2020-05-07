@@ -213,8 +213,11 @@ class OcrController extends Controller
             ],
         ];
         */
-        $template_path = storage_path('../public/json/flexbubble-reply.json');
-        $message =  json_decode(file_get_contents($template_path), true); 
+        $template_path = storage_path('../public/json/flexbubble-reply.json');        
+        $string_json = file_get_contents($template_path);
+        $image_url = url('/storage')."/".$data["photo"];
+        $string_json = str_replace("<image>","",$string_json);
+        $message =  json_decode($string_json, true); 
         $body = [
             "replyToken" => $event["replyToken"],
             "messages" => [ $message ],
