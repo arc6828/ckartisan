@@ -221,8 +221,8 @@ class OcrController extends Controller
             ],
         ];
         */
-        //$template_path = storage_path('../public/json/flexbubble-reply.json');   
-        $template_path = storage_path('../public/json/text-reply.json');       
+        $template_path = storage_path('../public/json/flexbubble-test.json');   
+        //$template_path = storage_path('../public/json/text-reply.json');       
         $string_json = file_get_contents($template_path);
         $image_url = url('/storage')."/".$data["photo"];
         $string_json = str_replace("<image>",$image_url,$string_json);
