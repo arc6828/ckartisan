@@ -61,7 +61,7 @@
                                     "color": "#AAAAAA"
                                 }, {
                                     "type": "text",
-                                    "text": "<clean_array>",
+                                    "text": "<numbers>",
                                     "flex": 4,
                                     "size": "sm",
                                     "color": "#666666",

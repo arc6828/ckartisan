@@ -58,7 +58,7 @@ class OcrController extends Controller
         //3
         $string_json = str_replace("<content>",$data["content"],$string_json);
         //4
-        $string_json = str_replace("<clean_array>",$data["content"],$string_json);        
+        $string_json = str_replace("<numbers>",$data["content"],$string_json);        
         //5
         $n = $data['title'];        
         if(is_numeric($n)){            
@@ -147,7 +147,7 @@ class OcrController extends Controller
                 $data = [
                     "title" => $detected_text['title'],
                     "content" => $detected_text['content'],
-                    "clean_array" => $detected_text['clean_array'],
+                    "numbers" => $detected_text['numbers'],
                     "photo" => "uploads/ocr/".$filename,
                 ];
                 Ocr::create($data);
@@ -178,7 +178,7 @@ class OcrController extends Controller
         $texts = $result->text();
         $title = null;
         $description=[];
-        $clean_array=[];
+        $numbers=[];
         $first = true;
         if($texts){
             foreach($texts as $key=>$text)
@@ -199,7 +199,7 @@ class OcrController extends Controller
                     }
                     */
                     $title = $temp;
-                    $clean_array[] = $temp;
+                    $numbers[] = $temp;
                 }
 
                 //echo $text->description() ;
@@ -215,7 +215,7 @@ class OcrController extends Controller
         return [
             "title" => $title,
             "content" => json_encode($description, JSON_UNESCAPED_UNICODE ),
-            "clean_array" => json_encode($clean_array, JSON_UNESCAPED_UNICODE ),
+            "numbers" => json_encode($numbers, JSON_UNESCAPED_UNICODE ),
         ];
         // fetch text from image //
         //print_r($description);    
@@ -278,8 +278,9 @@ class OcrController extends Controller
         
         //3
         $string_json = str_replace("<content>","-",$string_json);
+        /*
         //4
-        $string_json = str_replace("<clean_array>",join(",",json_decode($data["clean_array"])),$string_json); 
+        $string_json = str_replace("<numbers>",join(",",json_decode($data["numbers"])),$string_json); 
         
         $string_json = str_replace("<title>",$data["title"],$string_json); 
               
@@ -298,7 +299,7 @@ class OcrController extends Controller
         $string_json = str_replace("<min5>",$levels[5],$string_json);
         $string_json = str_replace("<min6>",$levels[6],$string_json);
         $string_json = str_replace("<min7>",$levels[7],$string_json);
-        
+        */
         //6
         $string_json = str_replace("<user_id>",$event["source"]["userId"],$string_json);
         //7
