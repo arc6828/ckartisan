@@ -145,8 +145,9 @@ class OcrController extends Controller
                 
                 //CREATE OCR
                 $data = [
-                    "title" => "Line : api/ocr",
+                    "title" => $detected_text['title'],
                     "content" => $detected_text['content'],
+                    "clean_array" => $detected_text['clean_array'],
                     "photo" => "uploads/ocr/".$filename,
                 ];
                 Ocr::create($data);
@@ -177,6 +178,7 @@ class OcrController extends Controller
         $texts = $result->text();
         $title = null;
         $description=[];
+        $clean_array=[];
         $first = true;
         if($texts){
             foreach($texts as $key=>$text)
@@ -187,6 +189,7 @@ class OcrController extends Controller
                 $temp = $this->cleanNumber($text->description());
                 //ถ้าได้ตัวเลขน้อยกว่าเดิม ให้บันทึก
                 if($temp){
+                    /*
                     if($title){
                         if($temp < $title){
                             $title = $temp;
@@ -194,6 +197,9 @@ class OcrController extends Controller
                     }else{
                         $title = $temp;
                     }
+                    */
+                    $title = $temp;
+                    $clean_array[] = $temp;
                 }
 
                 //echo $text->description() ;
@@ -209,6 +215,7 @@ class OcrController extends Controller
         return [
             "title" => $title,
             "content" => json_encode($description, JSON_UNESCAPED_UNICODE ),
+            "clean_array" => json_encode($clean_array, JSON_UNESCAPED_UNICODE ),
         ];
         // fetch text from image //
         //print_r($description);    
