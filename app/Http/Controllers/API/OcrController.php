@@ -36,6 +36,14 @@ class OcrController extends Controller
         
         $filename = $this->random_string(50).".png";
         $new_path = storage_path('app/public/uploads/ocr/'.$filename);
+
+
+        $template_path = storage_path('../public/json/flexbubble-reply.json');        
+        $string_json = file_get_contents($template_path);
+        $image_url = url('/storage')."/";
+        $string_json = str_replace("<image>",$image_url,$string_json);
+        $message =  json_decode($string_json, true); 
+        print_r($message);
         
         /*
         Image::make($result)->save($new_path);
@@ -216,7 +224,7 @@ class OcrController extends Controller
         $template_path = storage_path('../public/json/flexbubble-reply.json');        
         $string_json = file_get_contents($template_path);
         $image_url = url('/storage')."/".$data["photo"];
-        $string_json = str_replace("<image>","",$string_json);
+        $string_json = str_replace("<image>",$image_url,$string_json);
         $message =  json_decode($string_json, true); 
         $body = [
             "replyToken" => $event["replyToken"],
