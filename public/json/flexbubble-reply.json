@@ -76,13 +76,13 @@
                                     "type": "text",
                                     "text": "ระดับน้ำ",
                                     "flex": 3,
-                                    "size": "sm",
+                                    "size": "xl",
                                     "color": "#AAAAAA"
                                 }, {
                                     "type": "text",
                                     "text": "<title>",
                                     "flex": 4,
-                                    "size": "md",
+                                    "size": "xl",
                                     "color": "#666666",
                                     "wrap": true
                                 }
