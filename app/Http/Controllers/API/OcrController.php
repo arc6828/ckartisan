@@ -176,7 +176,7 @@ class OcrController extends Controller
         $result = $vision->annotate($image);
         //print_r($result); exit;
         $texts = $result->text();
-        $title = "";
+        $title = "-";
         $description=[];
         $numbers=[];
         $first = true;
@@ -278,9 +278,11 @@ class OcrController extends Controller
         
         //3
         $string_json = str_replace("<content>","-",$string_json);
-        /*
+        
         //4
-        $string_json = str_replace("<numbers>",join(",",json_decode($data["numbers"])),$string_json); 
+        $numbers = join(",",json_decode($data["numbers"]));
+        if(empty($numbers)){ $numbers = "-";}
+        $string_json = str_replace("<numbers>",$numbers,$string_json); 
         
         $string_json = str_replace("<title>",$data["title"],$string_json); 
               
@@ -299,7 +301,7 @@ class OcrController extends Controller
         $string_json = str_replace("<min5>",$levels[5],$string_json);
         $string_json = str_replace("<min6>",$levels[6],$string_json);
         $string_json = str_replace("<min7>",$levels[7],$string_json);
-        */
+        
         //6
         $string_json = str_replace("<user_id>",$event["source"]["userId"],$string_json);
         //7
