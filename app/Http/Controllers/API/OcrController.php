@@ -23,76 +23,8 @@ class OcrController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
-        $result = $this->getImageFromLine("11914912908139", $this->channel_access_token);
-        
-        //header('Content-Type: image/jpeg');
-        //echo $result;
-
-        //echo Image::make($result)->mime();
-         $this->random_string(50);
-        //$size = $image->filesize();            
-        
-        $filename = $this->random_string(50).".png";
-        $new_path = storage_path('app/public/uploads/ocr/'.$filename);
-
-
-        $template_path = storage_path('../public/json/flexbubble-reply.json');        
-        $string_json = file_get_contents($template_path);
-        $image_url = url('/storage')."/";
-        $string_json = str_replace("<image>",$image_url,$string_json);
-        $message =  json_decode($string_json, true); 
-        print_r($message);
-
-        $data = [
-            "title" => "Line : api/ocr",
-            "content" => "[1,2,3,4,5]",
-            "photo" => "uploads/ocr/".$filename,
-        ];
-        $event = json_decode('{"type":"message","replyToken":"788723e1b9334e6890995c636ae6ad6a","source":{"userId":"U60d0f0345820dae230b04e5c79971d0e","type":"user"},"timestamp":1588763175613,"mode":"active","message":{"type":"image","id":"11915933589867","contentProvider":{"type":"line"}}}', true);
-        //1
-        $string_json = str_replace("<image>",$image_url,$string_json);
-        //2
-        $string_json = str_replace("<message_id>",$event["message"]["id"],$string_json);
-        //3
-        $string_json = str_replace("<content>",$data["content"],$string_json);
-        //4
-        $string_json = str_replace("<numbers>",$data["content"],$string_json);        
-        //5
-        $n = $data['title'];        
-        if(is_numeric($n)){            
-            $levels = [$n-10,$n-5,$n+5,$n+10,$n-2,$n-4,$n-6,$n-8];
-        }else{
-            $levels = ["-","-","-","-","-","-","-","-"];
-        }
-        $string_json = str_replace("<min0>",$levels[0],$string_json);
-        $string_json = str_replace("<min1>",$levels[1],$string_json);
-        $string_json = str_replace("<min2>",$levels[2],$string_json);
-        $string_json = str_replace("<min3>",$levels[3],$string_json);
-        $string_json = str_replace("<min4>",$levels[4],$string_json);
-        $string_json = str_replace("<min5>",$levels[5],$string_json);
-        $string_json = str_replace("<min6>",$levels[6],$string_json);
-        $string_json = str_replace("<min7>",$levels[7],$string_json);
-        //6
-        $string_json = str_replace("<user_id>",$event["source"]["userId"],$string_json);
-        //7
-        $string_json = str_replace("<login>",$image_url,$string_json);
-        //8
-        $string_json = str_replace("<user_manual>",$image_url,$string_json);
-        $message =  json_decode($string_json, true); 
-        
-        /*
-        Image::make($result)->save($new_path);
-        echo 'uploads/ocr/'.$filename;
-        $url = url('/')."/storage/uploads/ocr/".$filename;
-        echo "<br>".$url;
-        echo "<br>"."<img src='{$url}' />";
-        */
-        
-
-        //$img64 = base64_encode($result);
-        //echo "img src='{$img64}'";
+    {        
+        //
     }
 
     /**
@@ -103,79 +35,88 @@ class OcrController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //SAVE LOG
         $requestData = $request->all();
         $data = [
             "title" => "Line : api/ocr",
             "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
         ];
-        MyLog::create($data);
-
-        //$content = json_decode(json_encode($requestData, JSON_UNESCAPED_UNICODE));
+        MyLog::create($data);        
         
-        //$bearerToken = $request->bearerToken();
-        //echo $bearerToken;
-        //USE TO VERIFY YOURSELF
-        //$channel_access_token = "PAWHiPcSKPa2aHS81w2TRB2sJP1IQmf6kBFxtSE8BD5FLarviYZ2U57SVXiSkNgAzgXYjLGO60jDHhPdLwcuzUQWZxYLebilp0J1I1mrm6Jsv6tu1p3iHKzm2I2rWIPjASnO9jnpz9oD4QZ/fxhH+QdB04t89/1O/w1cDnyilFU=";
-        $channel_access_token = $this->channel_access_token;
-        
-        //GET FIRST EVENT
+        //GET ONLY FIRST EVENT
         $event = $requestData["events"][0];
-        $message = $event["message"];
-        
-        switch($message["type"]){
-            case "image" : 
-                $binary_data  = $this->getImageFromLine($message["id"], $channel_access_token);
-                
-                $filename = $this->random_string(50).".png";
-                $new_path = storage_path('app/public/uploads/ocr/'.$filename);
-                Image::make($binary_data)->save($new_path);
-                //echo 'uploads/ocr/'.$filename;
-                //$url = url('/')."/storage/uploads/ocr/".$filename;
-                //echo "<br>".$url;
-                //echo "<br>"."<img src='{$url}' />";
-                
-                //GOOGLE VISION API
-                //$path = storage_path('app/public/'.$requestData['photo']);
-                //echo $path;
-                $detected_text = $this->detect_text2($new_path);
-
-                //$requestData['title'] = $detected_text['title'];
-                //$requestData['content'] = $detected_text['content'];
-                
-                //CREATE OCR
-                $data = [
-                    "title" => $detected_text['title'],
-                    "content" => $detected_text['content'],
-                    "numbers" => $detected_text['numbers'],
-                    "photo" => "uploads/ocr/".$filename,
-                ];
-                Ocr::create($data);
-
-                
-                
-                $this->replyToUser($data,$event, $channel_access_token);
+        switch($event["type"]){
+            case "message" : 
+                $this->messageHandler($request,$event);
                 break;
-        }      
+            case "postback" : 
+                $this->postbackHandler($request, $event);
+                break;
+        }
+    }
+
+    public function messageHandler(Request $request, $event)
+    {
+        switch($event["message"]["type"]){
+            case "image" :                 
+                imageHandler($event);
+                break;
+            case "location" :                 
+                locationHandler($event);
+                break;
+        }   
+
+    }
+
+    public function imageHandler($event)
+    {
+        //USE TO VERIFY YOURSELF
+        //$channel_access_token = "PAWHiPcSKPa2aHS8...................H+QdB04t89/1O/w1cDnyilFU=";
+        $channel_access_token = $this->channel_access_token;
+
+        //LOAD REMOTE IMAGE AND SAVE TO LOCAL
+        $binary_data  = $this->getImageFromLine($event["message"]["id"], $channel_access_token);                
+        $filename = $this->random_string(50).".png";
+        $new_path = storage_path('app/public/uploads/ocr/'.$filename);
+        Image::make($binary_data)->save($new_path);
+                        
+        //ANALYSE IMAGE WITH GOOGLE VISION API
+        $detected_text = $this->detectText($new_path);
+        
+        //CREATE OCR
+        $data = [
+            "title" => $detected_text['title'],
+            "content" => $detected_text['content'],
+            "numbers" => $detected_text['numbers'],
+            "photo" => "uploads/ocr/".$filename,
+        ];
+        Ocr::create($data);
+
+        //FINALLY REPLY TO USER                
+        $this->replyToUser($data,$event, $channel_access_token);
+
+    }
+
+    public function locationHandler($event)
+    {
         
 
     }
 
-
-    function detect_text2($path)
+    
+    public function detectText($path)
     {
         //https://onlinelearningportal.website/google-vision-api-implementation-with-laravel-5-8/
+        
+        //CALL GOOGLE VISION OBJECT AND DO TEXT DETECTION
         $key_path = storage_path('../public/CKartisan-c6f07fc70d07.json');
-        $vision = new VisionClient(['keyFile' => json_decode(file_get_contents($key_path), true)]); 
-        
-        $image = $vision->image(file_get_contents($path), 
-        [
-            'TEXT_DETECTION'
-        ]);
-        
+        $vision = new VisionClient(['keyFile' => json_decode(file_get_contents($key_path), true)]);         
+        $image = $vision->image(file_get_contents($path), [ 'TEXT_DETECTION' ] );        
         $result = $vision->annotate($image);
         //print_r($result); exit;
         $texts = $result->text();
+
+        //FIND OUT WATER LEVEL
         $title = "-";
         $description=[];
         $numbers=[];
@@ -201,15 +142,6 @@ class OcrController extends Controller
                     $title = $temp;
                     $numbers[] = $temp;
                 }
-
-                //echo $text->description() ;
-                //print_r($text->info());
-                /*$bounds = [];
-                foreach ($text->boundingPoly()['vertices'] as $vertex) {
-                    $bounds[] = sprintf('(%d,%d)', $vertex['x'], $vertex['y']);
-                }
-                print('Bounds: ' . join(', ',$bounds) . PHP_EOL);*/
-                //echo "<br>";
             }
         }
         return [
@@ -222,7 +154,7 @@ class OcrController extends Controller
 
     }
 
-    function cleanNumber($text){
+    public function cleanNumber($text){
         //REMOVE E
         $text = str_replace("E","",$text);
         //REMOVE .
@@ -246,25 +178,7 @@ class OcrController extends Controller
     }
 
     public function replyToUser($data, $event, $channel_access_token){
-        /*
-        $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('<channel access token>');
-        $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
-
-        $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
-        $response = $bot->replyMessage('<replyToken>', $textMessageBuilder);
-
-        echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
-
-        $body = [
-            "replyToken" => $event["replyToken"],
-            "messages" => [
-                [
-                    "type" => "text",
-                    "text"=> "ขอบคุณสำหรับข้อมูล ". $data['content']
-                ]
-            ],
-        ];
-        */
+        
         //$template_path = storage_path('../public/json/flexbubble-test.json');  
         $template_path = storage_path('../public/json/flexbubble-reply.json'); 
         //$template_path = storage_path('../public/json/text-reply.json');       
@@ -371,6 +285,23 @@ class OcrController extends Controller
     
         return $key;
     }
+
+    public function postbackHandler(Request $request, $event)
+    {
+        $requestData = $request->all();
+
+        /*
+        $lineid = $requestData['lineid'];
+        $msgocrid = $requestData['msgocrid'];
+        $title = $requestData['title'];
+
+        // update title in ocr
+        $updatetitle = Ocr::where('lineid', $lineid)
+                ->where('msgocrid', $msgocrid)
+                ->update(['title' => $title]);
+        */
+    }
+
 
     
 
