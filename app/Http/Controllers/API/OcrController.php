@@ -44,6 +44,43 @@ class OcrController extends Controller
         $string_json = str_replace("<image>",$image_url,$string_json);
         $message =  json_decode($string_json, true); 
         print_r($message);
+
+        $data = [
+            "title" => "Line : api/ocr",
+            "content" => "[1,2,3,4,5]",
+            "photo" => "uploads/ocr/".$filename,
+        ];
+        $event = json_decode('{"type":"message","replyToken":"788723e1b9334e6890995c636ae6ad6a","source":{"userId":"U60d0f0345820dae230b04e5c79971d0e","type":"user"},"timestamp":1588763175613,"mode":"active","message":{"type":"image","id":"11915933589867","contentProvider":{"type":"line"}}}', true);
+        //1
+        $string_json = str_replace("<image>",$image_url,$string_json);
+        //2
+        $string_json = str_replace("<message_id>",$event["message"]["id"],$string_json);
+        //3
+        $string_json = str_replace("<content>",$data["content"],$string_json);
+        //4
+        $string_json = str_replace("<clean_array>",$data["content"],$string_json);        
+        //5
+        $n = $data['title'];        
+        if(is_numeric($n)){            
+            $levels = [$n-10,$n-5,$n+5,$n+10,$n-2,$n-4,$n-6,$n-8];
+        }else{
+            $levels = ["-","-","-","-","-","-","-","-"];
+        }
+        $string_json = str_replace("<min0>",$levels[0],$string_json);
+        $string_json = str_replace("<min1>",$levels[1],$string_json);
+        $string_json = str_replace("<min2>",$levels[2],$string_json);
+        $string_json = str_replace("<min3>",$levels[3],$string_json);
+        $string_json = str_replace("<min4>",$levels[4],$string_json);
+        $string_json = str_replace("<min5>",$levels[5],$string_json);
+        $string_json = str_replace("<min6>",$levels[6],$string_json);
+        $string_json = str_replace("<min7>",$levels[7],$string_json);
+        //6
+        $string_json = str_replace("<user_id>",$event["source"]["userId"],$string_json);
+        //7
+        $string_json = str_replace("<login>",$image_url,$string_json);
+        //8
+        $string_json = str_replace("<user_manual>",$image_url,$string_json);
+        $message =  json_decode($string_json, true); 
         
         /*
         Image::make($result)->save($new_path);
@@ -226,10 +263,12 @@ class OcrController extends Controller
         //$template_path = storage_path('../public/json/text-reply.json');       
         $string_json = file_get_contents($template_path);
         $image_url = url('/storage')."/".$data["photo"];
+
         //1
         $string_json = str_replace("<image>",$image_url,$string_json);
         //2
         $string_json = str_replace("<message_id>",$event["message"]["id"],$string_json);
+        /*
         //3
         $string_json = str_replace("<content>",$data["content"],$string_json);
         //4
@@ -249,6 +288,7 @@ class OcrController extends Controller
         $string_json = str_replace("<min5>",$levels[5],$string_json);
         $string_json = str_replace("<min6>",$levels[6],$string_json);
         $string_json = str_replace("<min7>",$levels[7],$string_json);
+        */
         //6
         $string_json = str_replace("<user_id>",$event["source"]["userId"],$string_json);
         //7
@@ -256,6 +296,11 @@ class OcrController extends Controller
         //8
         $string_json = str_replace("<user_manual>",$image_url,$string_json);
         $message =  json_decode($string_json, true); 
+
+        
+        
+        
+
         $body = [
             "replyToken" => $event["replyToken"],
             "messages" => [ $message ],
