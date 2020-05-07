@@ -47,15 +47,15 @@ class OcrController extends Controller
         $event = $requestData["events"][0];
         switch($event["type"]){
             case "message" : 
-                $this->messageHandler($request,$event);
+                $this->messageHandler($event);
                 break;
             case "postback" : 
-                $this->postbackHandler($request, $event);
+                $this->postbackHandler($event);
                 break;
         }
     }
 
-    public function messageHandler(Request $request, $event)
+    public function messageHandler($event)
     {
         switch($event["message"]["type"]){
             case "image" :                 
@@ -89,6 +89,11 @@ class OcrController extends Controller
             "content" => $detected_text['content'],
             "numbers" => $detected_text['numbers'],
             "photo" => "uploads/ocr/".$filename,
+            //"user_id" => "1", 
+            "lineid" => $event["source"]["userId"],
+            //"staffgaugeid" => "1",
+            //"locationid" => "1",
+            "msgocrid" => $event["message"]["id"],
         ];
         Ocr::create($data);
 
@@ -286,20 +291,35 @@ class OcrController extends Controller
         return $key;
     }
 
-    public function postbackHandler(Request $request, $event)
+    public function postbackHandler($event)
     {
-        $requestData = $request->all();
-
-        /*
-        $lineid = $requestData['lineid'];
-        $msgocrid = $requestData['msgocrid'];
-        $title = $requestData['title'];
+        
+        $queryString = $event['postback']['data'];
+        parse_str($queryString, $data);
 
         // update title in ocr
-        $updatetitle = Ocr::where('lineid', $lineid)
-                ->where('msgocrid', $msgocrid)
-                ->update(['title' => $title]);
-        */
+        
+        $ocr = Ocr::where('lineid', $data['lineid'])
+                ->where('msgocrid', $data['msgocrid'])
+                ->first();
+
+        $ocr->title = $data['title'];        
+        $ocr->save();        
+        
+        //REPLY
+        //CREATE OCR
+        $new_data = [
+            "title" => $ocr->title,
+            "content" => $ocr->content,
+            "numbers" => $ocr->numbers,
+            "photo" => $ocr->photo,
+        ];
+        //Ocr::create($data);
+
+        //FINALLY REPLY TO USER                
+        $this->replyToUser($new_data,$event, $channel_access_token);
+        
+        
     }
 
 

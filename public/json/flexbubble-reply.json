@@ -111,9 +111,8 @@
                                             "type": "button",
                                             "action": {
                                                 "type": "postback",
-                                                "label": "<min0>",
-                                                "text": "รหัสข้อมูลที่ : <messsage_id> , ข้อมูลที่แก้ไข : <min0>",
-                                                "data": "<user_id>,<messsage_id>,<min0>"
+                                                "label": "<min0>",                                                
+                                                "data": "lineid=<lineid>&msgocrid=<msgocrid>&title=<min0>"
                                             },
                                             "style": "primary"
                                         }
@@ -126,8 +125,7 @@
                                             "action": {
                                                 "type": "postback",
                                                 "label": "<min1>",
-                                                "text": "รหัสข้อมูลที่ : <messsage_id> , ข้อมูลที่แก้ไข : <min1>",
-                                                "data": "<user_id>,<messsage_id>,<min1>"
+                                                "data": "lineid=<lineid>&msgocrid=<msgocrid>&title=<min1>"
                                             },
                                             "style": "primary"
                                         }
@@ -140,8 +138,7 @@
                                             "action": {
                                                 "type": "postback",
                                                 "label": "<min2>",
-                                                "text": "รหัสข้อมูลที่ : <messsage_id> , ข้อมูลที่แก้ไข : <min2>",
-                                                "data": "<user_id>,<messsage_id>,<min2>"
+                                                "data": "lineid=<lineid>&msgocrid=<msgocrid>&title=<min2>"
                                             },
                                             "style": "primary"
                                         }
@@ -154,8 +151,7 @@
                                             "action": {
                                                 "type": "postback",
                                                 "label": "<min3>",
-                                                "text": "รหัสข้อมูลที่ : <messsage_id> , ข้อมูลที่แก้ไข : <min3>",
-                                                "data": "<user_id>,<messsage_id>,<min3>"
+                                                "data": "lineid=<lineid>&msgocrid=<msgocrid>&title=<min3>"
                                             },
                                             "style": "primary"
                                         }
@@ -175,8 +171,7 @@
                                             "action": {
                                                 "type": "postback",
                                                 "label": "<min4>",
-                                                "text": "รหัสข้อมูลที่ : <messsage_id> , ข้อมูลที่แก้ไข : <min4>",
-                                                "data": "<user_id>,<messsage_id>,<min4>"
+                                                "data": "lineid=<lineid>&msgocrid=<msgocrid>&title=<min4>"
                                             },
                                             "style": "primary"
                                         }
@@ -189,8 +184,7 @@
                                             "action": {
                                                 "type": "postback",
                                                 "label": "<min5>",
-                                                "text": "รหัสข้อมูลที่ : <messsage_id> , ข้อมูลที่แก้ไข : <min5>",
-                                                "data": "<user_id>,<messsage_id>,<min5>"
+                                                "data": "lineid=<lineid>&msgocrid=<msgocrid>&title=<min5>"
                                             },
                                             "style": "primary"
                                         }
@@ -203,8 +197,7 @@
                                             "action": {
                                                 "type": "postback",
                                                 "label": "<min6>",
-                                                "text": "รหัสข้อมูลที่ : <messsage_id> , ข้อมูลที่แก้ไข : <min6>",
-                                                "data": "<user_id>,<messsage_id>,<min6>"
+                                                "data": "lineid=<lineid>&msgocrid=<msgocrid>&title=<min6>"
                                             },
                                             "style": "primary"
                                         }
@@ -217,8 +210,7 @@
                                             "action": {
                                                 "type": "postback",
                                                 "label": "<min7>",
-                                                "text": "รหัสข้อมูลที่ : <messsage_id> , ข้อมูลที่แก้ไข : <min7>",
-                                                "data": "<user_id>,<messsage_id>,<min7>"
+                                                "data": "lineid=<lineid>&msgocrid=<msgocrid>&title=<min7>"
                                             },
                                             "style": "primary"
                                         }
