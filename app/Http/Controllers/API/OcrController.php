@@ -320,7 +320,7 @@ class OcrController extends Controller
 
         //FINALLY REPLY TO USER                
         $channel_access_token = $this->channel_access_token;
-        $event['message'] = ['id' => ''.$data['msgocrid'].' (Updated)'];
+        $event['message'] = ['id' => ''.$data['msgocrid'].'%20Updated'];
         $this->replyToUser($new_data,$event, $channel_access_token);
         
         
