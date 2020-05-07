@@ -228,7 +228,29 @@ class OcrController extends Controller
         $image_url = url('/storage')."/".$data["photo"];
         //1
         $string_json = str_replace("<image>",$image_url,$string_json);
-        
+        //2
+        $string_json = str_replace("<message_id>",$event["message"]["id"],$string_json);
+        //3
+        $string_json = str_replace("<content>",$data["content"],$string_json);
+        //4
+        $string_json = str_replace("<clean_array>",$data["content"],$string_json);        
+        //5
+        $n = $data['title'];        
+        if(is_numeric($n)){            
+            $levels = [$n-10,$n-5,$n+5,$n+10,$n-2,$n-4,$n-6,$n-8];
+        }else{
+            $levels = ["-","-","-","-","-","-","-","-"];
+        }
+        $string_json = str_replace("<min0>",$levels[0],$string_json);
+        $string_json = str_replace("<min1>",$levels[1],$string_json);
+        $string_json = str_replace("<min2>",$levels[2],$string_json);
+        $string_json = str_replace("<min3>",$levels[3],$string_json);
+        $string_json = str_replace("<min4>",$levels[4],$string_json);
+        $string_json = str_replace("<min5>",$levels[5],$string_json);
+        $string_json = str_replace("<min6>",$levels[6],$string_json);
+        $string_json = str_replace("<min7>",$levels[7],$string_json);
+        //6
+        $string_json = str_replace("<user_id>",$event["source"]["userId"],$string_json);
         //7
         $string_json = str_replace("<login>",$image_url,$string_json);
         //8
