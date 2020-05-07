@@ -222,11 +222,13 @@ class OcrController extends Controller
         $string_json = str_replace("<min7>",$levels[7],$string_json);
         
         //6
-        $string_json = str_replace("<user_id>",$event["source"]["userId"],$string_json);
+        $string_json = str_replace("<lineid>",$event["source"]["userId"],$string_json);
         //7
         $string_json = str_replace("<login>",$image_url,$string_json);
         //8
         $string_json = str_replace("<user_manual>",$image_url,$string_json);
+        //9
+        $string_json = str_replace("<msgocrid>",$event["message"]["id"],$string_json);
         $message =  json_decode($string_json, true); 
 
         
