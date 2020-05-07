@@ -176,7 +176,7 @@ class OcrController extends Controller
         $result = $vision->annotate($image);
         //print_r($result); exit;
         $texts = $result->text();
-        $title = "";
+        $title = 999;
         $description=[];
         $numbers=[];
         $first = true;
