@@ -319,6 +319,7 @@ class OcrController extends Controller
         //Ocr::create($data);
 
         //FINALLY REPLY TO USER                
+        $channel_access_token = $this->channel_access_token;
         $this->replyToUser($new_data,$event, $channel_access_token);
         
         
