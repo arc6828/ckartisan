@@ -268,11 +268,12 @@ class OcrController extends Controller
         $string_json = str_replace("<image>",$image_url,$string_json);
         //2
         $string_json = str_replace("<message_id>",$event["message"]["id"],$string_json);
-        /*
+        
         //3
         $string_json = str_replace("<content>",$data["content"],$string_json);
         //4
-        $string_json = str_replace("<clean_array>",$data["content"],$string_json);        
+        $string_json = str_replace("<clean_array>",$data["content"],$string_json); 
+        /*       
         //5
         $n = $data['title'];        
         if(is_numeric($n)){            
