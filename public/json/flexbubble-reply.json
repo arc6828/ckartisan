@@ -80,9 +80,9 @@
                                     "color": "#AAAAAA"
                                 }, {
                                     "type": "text",
-                                    "text": "title",
+                                    "text": "<title>",
                                     "flex": 4,
-                                    "size": "sm",
+                                    "size": "md",
                                     "color": "#666666",
                                     "wrap": true
                                 }
