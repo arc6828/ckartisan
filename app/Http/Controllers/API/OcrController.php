@@ -202,7 +202,7 @@ class OcrController extends Controller
         $response = $bot->replyMessage('<replyToken>', $textMessageBuilder);
 
         echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
-        */
+
         $body = [
             "replyToken" => $event["replyToken"],
             "messages" => [
@@ -211,6 +211,13 @@ class OcrController extends Controller
                     "text"=> "ขอบคุณสำหรับข้อมูล ". $data['content']
                 ]
             ],
+        ];
+        */
+        $template_path = storage_path('../public/json/flexbubble-reply.json');
+        $message =  json_decode(file_get_contents($template_path), true); 
+        $body = [
+            "replyToken" => $event["replyToken"],
+            "messages" => [ $message ],
         ];
 
         $opts = [
