@@ -59,10 +59,10 @@ class OcrController extends Controller
     {
         switch($event["message"]["type"]){
             case "image" :                 
-                imageHandler($event);
+                $this->imageHandler($event);
                 break;
             case "location" :                 
-                locationHandler($event);
+                $this->locationHandler($event);
                 break;
         }   
 
