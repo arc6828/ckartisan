@@ -25,7 +25,8 @@ class Ocr extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'content', 'photo','numbers','user_id','json_line','line_id','staffgaugeid','locationid','msgocrid'];
+    protected $fillable = ['title', 'content', 'photo',];
+    //protected $fillable = ['title', 'content', 'photo','numbers','user_id','json_line','line_id','staffgaugeid','locationid','msgocrid'];
 
     
 }
