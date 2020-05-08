@@ -138,7 +138,7 @@ class OcrController extends Controller
             "user_id" => 1,     //ASSUME
             "msglocid" => $event['message']['id'],
         ];
-
+        $data["staffgaugeid"] = $this->findNearestStaffgauge($data);
         //CREATE LOCATION        
         $location = Location::create($data);    
         $data["location"] = $location;             
@@ -149,7 +149,32 @@ class OcrController extends Controller
 
     }
 
-    
+    public function findNearestStaffgauge($data)
+    {
+        $staffgauges = Staffgauge::get();
+
+        $nearest_staffgauge_id = null;
+        $min_distance = null;
+
+        foreach($staffgauges as $item)
+        {
+            $dLat = 0;
+            $dLon = 0;
+            $d = sqrt($dLat*$dLat + $dLon*$dLon);
+            if($min_distance == null)
+            {
+                $nearest_staffgauge_id = $item->id;
+                $min_distance = d;
+            }
+            else if($d < $min_distance )
+            {
+                $nearest_staffgauge_id = $item->id;
+                $min_distance = d;
+            }
+        }
+        return $nearest_staffgauge_id;
+    }
+
     public function detectText($path)
     {
         //https://onlinelearningportal.website/google-vision-api-implementation-with-laravel-5-8/
@@ -289,7 +314,7 @@ class OcrController extends Controller
                 //4
                 $string_json = str_replace("<longitude>",$data["longitude"],$string_json);
                 //5
-                $string_json = str_replace("<staffgauge_name>",$location->staffgauge->addressgauge."({$location->staffgauge->id})" ,$string_json);
+                $string_json = str_replace("<staffgauge_name>",$location->staffgauge->addressgauge." [{$location->staffgauge->id}]" ,$string_json);
                 //6
                 $string_json = str_replace("<created_at>",$location->created_at,$string_json);
                 $message = json_decode($string_json, true); 
