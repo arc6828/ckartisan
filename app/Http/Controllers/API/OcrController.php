@@ -128,7 +128,7 @@ class OcrController extends Controller
     public function locationHandler($event)
     {
         //PREPARE DATA
-        $requestData = [
+        $data = [
             "address" => $event['message']['address'],
             "latitude" => $event['message']['latitude'],
             "longitude" => $event['message']['longitude'],
@@ -140,7 +140,7 @@ class OcrController extends Controller
         ];
 
         //CREATE LOCATION        
-        $ocr = Location::create($requestData);                     
+        $ocr = Location::create($data);                     
 
         //FINALLY REPLY TO USER                
         $channel_access_token = $this->channel_access_token;
