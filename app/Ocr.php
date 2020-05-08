@@ -28,5 +28,8 @@ class Ocr extends Model
     //protected $fillable = ['title', 'content', 'photo',];
     protected $fillable = ['title', 'content', 'photo','numbers','user_id','json_line','lineid','staffgaugeid','locationid','msgocrid'];
 
-    
+    public function staffgauge()
+    {
+        return $this->belongsTo('App\Staffgauge', 'staffgaugeid');
+    }
 }

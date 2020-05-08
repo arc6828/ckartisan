@@ -31,6 +31,25 @@
                     "spacing": "sm",
                     "margin": "lg",
                     "contents": [{
+                        "type": "box",
+                        "layout": "baseline",
+                        "spacing": "sm",
+                        "contents": [{
+                                "type": "text",
+                                "text": "มาตรวัดที่",
+                                "flex": 3,
+                                "size": "sm",
+                                "color": "#AAAAAA"
+                            }, {
+                                "type": "text",
+                                "text": "<staffgauge_name>",
+                                "flex": 4,
+                                "size": "sm",
+                                "color": "#666666",
+                                "wrap": true
+                            }
+                        ]
+                    }, {
                             "type": "box",
                             "layout": "baseline",
                             "spacing": "sm",

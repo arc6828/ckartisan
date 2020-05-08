@@ -141,7 +141,9 @@ class OcrController extends Controller
             $data["staffgaugeid"] = $location->staffgaugeid;
             $data["locationid"] = $location->id;
         }
-        Ocr::create($data);
+        $ocr = Ocr::create($data);
+        
+        $data["ocr"] = $ocr; 
 
         //FINALLY REPLY TO USER                
         $this->replyToUser($data,$event, $channel_access_token,"flex-image");
@@ -281,6 +283,8 @@ class OcrController extends Controller
         switch($message_type)
         {
             case "flex-image": 
+                
+                $ocr = $data["ocr"];
                 //$template_path = storage_path('../public/json/flexbubble-test.json');  
                 $template_path = storage_path('../public/json/flexbubble-reply.json'); 
                 //$template_path = storage_path('../public/json/text-reply.json');       
@@ -326,6 +330,8 @@ class OcrController extends Controller
                 $string_json = str_replace("<user_manual>",$image_url,$string_json);
                 //9
                 $string_json = str_replace("<msgocrid>",$event["message"]["id"],$string_json);
+                //10
+                $string_json = str_replace("<staffgauge_name>",$ocr->staffgauge->addressgauge." [{$ocr->staffgauge->id}]" ,$string_json);
                 $message =  json_decode($string_json, true); 
                 break;
             case "flex-location": 
