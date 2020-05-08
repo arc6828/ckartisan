@@ -289,7 +289,7 @@ class OcrController extends Controller
                 //4
                 $string_json = str_replace("<longitude>",$data["longitude"],$string_json);
                 //5
-                $string_json = str_replace("<staffguage_name>",$location->staffgauge->addressgauge. "({$location->staffgauge->id})" ,$string_json);
+                //$string_json = str_replace("<staffgauge_name>",$location->staffgauge->addressgauge."({$location->staffgauge->id})" ,$string_json);
                 //6
                 $string_json = str_replace("<created_at>",$location->created_at,$string_json);
                 $message = json_decode($string_json, true); 

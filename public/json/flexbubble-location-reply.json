@@ -104,7 +104,7 @@
                                     "color": "#AAAAAA"
                                 }, {
                                     "type": "text",
-                                    "text": "<staffguage_name>",
+                                    "text": "<staffgauge_name>",
                                     "flex": 5,
                                     "size": "sm",
                                     "color": "#666666",
