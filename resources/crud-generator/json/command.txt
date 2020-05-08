@@ -13,3 +13,7 @@ php artisan crud:generate Payment --fields_from_file="resources/crud-generator/j
 php artisan crud:generate Income --fields_from_file="resources/crud-generator/json/income.json"
 
 php artisan crud:generate MyLog --fields_from_file="resources/crud-generator/json/mylog.json"
+
+php artisan crud:generate Location --fields_from_file="resources/crud-generator/json/location.json"
+
+php artisan crud:generate Staffgauge --fields_from_file="resources/crud-generator/json/staffgauge.json"

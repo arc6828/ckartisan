@@ -125,7 +125,36 @@ class OcrController extends Controller
 
     public function locationHandler($event)
     {
+        $address = $event['message']['address'];
+        $latitude = $event['message']['latitude'];
+        $longitude = $event['message']['longitude'];
+
         
+        parse_str($queryString, $data);
+
+        // update title in ocr
+        
+        $ocr = Ocr::where('lineid', $data['lineid'])
+                ->where('msgocrid', $data['msgocrid'])
+                ->first();
+
+        $ocr->title = $data['title'];        
+        $ocr->save();        
+        
+        //REPLY
+        //CREATE OCR
+        $new_data = [
+            "title" => $ocr->title,
+            "content" => $ocr->content,
+            "numbers" => $ocr->numbers,
+            "photo" => $ocr->photo,
+        ];
+        //Ocr::create($data);
+
+        //FINALLY REPLY TO USER                
+        $channel_access_token = $this->channel_access_token;
+        $event['message'] = ['id' => ''.$data['msgocrid'] ];
+        $this->replyToUser($new_data,$event, $channel_access_token,"flex");
 
     }
 

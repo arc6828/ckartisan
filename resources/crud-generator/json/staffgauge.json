@@ -1,0 +1,28 @@
+{
+    "fields": [
+        {
+            "name": "latitudegauge",
+            "type": "string"
+        },
+        {
+            "name": "longitudegauge",
+            "type": "string"
+        },
+        {
+            "name": "addressgauge",
+            "type": "text"
+        },
+        {
+            "name": "amphoe",
+            "type": "string"
+        },
+        {
+            "name": "district",
+            "type": "string"
+        },
+        {
+            "name": "province",
+            "type": "string"
+        }
+    ]
+}

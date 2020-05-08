@@ -58,3 +58,5 @@ Route::get('/img', function()
 });
 
 Route::resource('my-log', 'MyLogController');
+Route::resource('location', 'LocationController');
+Route::resource('staffgauge', 'StaffgaugeController');

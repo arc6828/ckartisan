@@ -1,0 +1,36 @@
+{
+    "fields": [
+        {
+            "name": "address",
+            "type": "text"
+        },
+        {
+            "name": "latitude",
+            "type": "string"
+        },
+        {
+            "name": "longitude",
+            "type": "string"
+        },
+        {
+            "name": "typegroup",
+            "type": "string"
+        },
+        {
+            "name": "lineid",
+            "type": "string"
+        },
+        {
+            "name": "staffgaugeid",
+            "type": "string"
+        },
+        {
+            "name": "user_id",
+            "type": "integer"
+        },
+        {
+            "name": "msglocid",
+            "type": "string"
+        }
+    ]
+}
