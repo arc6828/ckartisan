@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\MyLog;
 use App\Ocr;
+use App\Location;
+use App\Staffgauge;
 
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\VisionClient;
@@ -119,42 +121,30 @@ class OcrController extends Controller
         Ocr::create($data);
 
         //FINALLY REPLY TO USER                
-        $this->replyToUser($data,$event, $channel_access_token,"flex");
+        $this->replyToUser($data,$event, $channel_access_token,"flex-image");
 
     }
 
     public function locationHandler($event)
     {
-        $address = $event['message']['address'];
-        $latitude = $event['message']['latitude'];
-        $longitude = $event['message']['longitude'];
-
-        
-        parse_str($queryString, $data);
-
-        // update title in ocr
-        
-        $ocr = Ocr::where('lineid', $data['lineid'])
-                ->where('msgocrid', $data['msgocrid'])
-                ->first();
-
-        $ocr->title = $data['title'];        
-        $ocr->save();        
-        
-        //REPLY
-        //CREATE OCR
-        $new_data = [
-            "title" => $ocr->title,
-            "content" => $ocr->content,
-            "numbers" => $ocr->numbers,
-            "photo" => $ocr->photo,
+        //PREPARE DATA
+        $requestData = [
+            "address" => $event['message']['address'],
+            "latitude" => $event['message']['latitude'],
+            "longitude" => $event['message']['longitude'],
+            "typegroup" => $event['source']['type'],
+            "lineid" => $event['source']['userId'],
+            "staffgaugeid" => 1, //ASSUME
+            "user_id" => 1,     //ASSUME
+            "msglocid" => $event['message']['id'],
         ];
-        //Ocr::create($data);
+
+        //CREATE LOCATION        
+        $ocr = Location::create($requestData);                     
 
         //FINALLY REPLY TO USER                
         $channel_access_token = $this->channel_access_token;
-        $event['message'] = ['id' => ''.$data['msgocrid'] ];
-        $this->replyToUser($new_data,$event, $channel_access_token,"flex");
+        $this->replyToUser($data,$event, $channel_access_token,"flex-location");
 
     }
 
@@ -237,7 +227,7 @@ class OcrController extends Controller
         
         switch($message_type)
         {
-            case "flex": 
+            case "flex-image": 
                 //$template_path = storage_path('../public/json/flexbubble-test.json');  
                 $template_path = storage_path('../public/json/flexbubble-reply.json'); 
                 //$template_path = storage_path('../public/json/text-reply.json');       
@@ -284,6 +274,21 @@ class OcrController extends Controller
                 //9
                 $string_json = str_replace("<msgocrid>",$event["message"]["id"],$string_json);
                 $message =  json_decode($string_json, true); 
+                break;
+            case "flex-location": 
+                $template_path = storage_path('../public/json/flexbubble-location-reply.json');   
+                $string_json = file_get_contents($template_path);                
+                //1
+                $string_json = str_replace("<message_id>",$event["message"]["id"],$string_json);
+                //2
+                $string_json = str_replace("<address>",$data["address"],$string_json);
+                //3
+                $string_json = str_replace("<latitude>",$data["latitude"],$string_json);
+                //4
+                $string_json = str_replace("<longitude>",$data["longitude"],$string_json);
+                //5
+                $string_json = str_replace("<create_at>",date("Y-m-d h:i:sa"),$string_json);
+                $message = json_decode($string_json, true); 
                 break;
             case "quickReply": 
                 $template_path = storage_path('../public/json/quick-reply.json');   
@@ -378,7 +383,7 @@ class OcrController extends Controller
         //FINALLY REPLY TO USER                
         $channel_access_token = $this->channel_access_token;
         $event['message'] = ['id' => ''.$data['msgocrid'] ];
-        $this->replyToUser($new_data,$event, $channel_access_token,"flex");
+        $this->replyToUser($new_data,$event, $channel_access_token,"flex-image");
         
         
     }
