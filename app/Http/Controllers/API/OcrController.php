@@ -130,12 +130,17 @@ class OcrController extends Controller
             "content" => $detected_text['content'],
             "numbers" => $detected_text['numbers'],
             "photo" => "uploads/ocr/".$filename,
-            //"user_id" => "1", 
+            "user_id" => "1",  //ASSUME
             "lineid" => $event["source"]["userId"],
             //"staffgaugeid" => "1",
             //"locationid" => "1",
             "msgocrid" => $event["message"]["id"],
         ];
+        $location = Location::where('lineid',$data['lineid'])->orderBy('created_at','desc')->first();
+        if($location){
+            $data["staffgaugeid"] = $location->staffgaugeid;
+            $data["locationid"] = $location->id;
+        }
         Ocr::create($data);
 
         //FINALLY REPLY TO USER                
