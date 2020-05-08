@@ -64,8 +64,29 @@ class OcrController extends Controller
             case "location" :                 
                 $this->locationHandler($event);
                 break;
+            case "text" :                 
+                $this->textHandler($event);
+                break;
         }   
 
+    }
+
+    public function textHandler($event)
+    {
+        switch( strtolower($event["message"]["text"]) )
+        {
+            case "line quick reply" :                 
+                $this->quickReplyHandler($event);
+                break;
+
+            
+        }   
+    }
+
+    public function quickReplyHandler($event)
+    {
+        $channel_access_token = $this->channel_access_token;
+        $this->replyToUser(null, $event, $channel_access_token, "quickReply");
     }
 
     public function imageHandler($event)
@@ -98,7 +119,7 @@ class OcrController extends Controller
         Ocr::create($data);
 
         //FINALLY REPLY TO USER                
-        $this->replyToUser($data,$event, $channel_access_token);
+        $this->replyToUser($data,$event, $channel_access_token,"flex");
 
     }
 
@@ -182,58 +203,65 @@ class OcrController extends Controller
         return false;
     }
 
-    public function replyToUser($data, $event, $channel_access_token){
+    public function replyToUser($data, $event, $channel_access_token, $message_type)
+    {
         
-        //$template_path = storage_path('../public/json/flexbubble-test.json');  
-        $template_path = storage_path('../public/json/flexbubble-reply.json'); 
-        //$template_path = storage_path('../public/json/text-reply.json');       
-        $string_json = file_get_contents($template_path);
-        $image_url = url('/storage')."/".$data["photo"];
+        switch($message_type)
+        {
+            case "flex": 
+                //$template_path = storage_path('../public/json/flexbubble-test.json');  
+                $template_path = storage_path('../public/json/flexbubble-reply.json'); 
+                //$template_path = storage_path('../public/json/text-reply.json');       
+                $string_json = file_get_contents($template_path);
+                $image_url = url('/storage')."/".$data["photo"];
 
-        //1
-        $string_json = str_replace("<image>",$image_url,$string_json);
-        //2
-        $string_json = str_replace("<message_id>",$event["message"]["id"],$string_json);
-        
-        //3
-        $string_json = str_replace("<content>","-",$string_json);
-        
-        //4
-        $numbers = join(",",json_decode($data["numbers"]));
-        if(empty($numbers)){ $numbers = "-";}
-        $string_json = str_replace("<numbers>",$numbers,$string_json); 
-        
-        $string_json = str_replace("<title>",$data["title"],$string_json); 
-              
-        //5
-        $n = $data['title'];        
-        if(is_numeric($n)){            
-            $levels = [$n-10,$n-5,$n+5,$n+10,$n-2,$n-4,$n-6,$n-8];
-        }else{
-            $levels = ["-","-","-","-","-","-","-","-"];
-        }
-        $string_json = str_replace("<min0>",$levels[0],$string_json);
-        $string_json = str_replace("<min1>",$levels[1],$string_json);
-        $string_json = str_replace("<min2>",$levels[2],$string_json);
-        $string_json = str_replace("<min3>",$levels[3],$string_json);
-        $string_json = str_replace("<min4>",$levels[4],$string_json);
-        $string_json = str_replace("<min5>",$levels[5],$string_json);
-        $string_json = str_replace("<min6>",$levels[6],$string_json);
-        $string_json = str_replace("<min7>",$levels[7],$string_json);
-        
-        //6
-        $string_json = str_replace("<lineid>",$event["source"]["userId"],$string_json);
-        //7
-        $string_json = str_replace("<login>",$image_url,$string_json);
-        //8
-        $string_json = str_replace("<user_manual>",$image_url,$string_json);
-        //9
-        $string_json = str_replace("<msgocrid>",$event["message"]["id"],$string_json);
-        $message =  json_decode($string_json, true); 
-
-        
-        
-        
+                //1
+                $string_json = str_replace("<image>",$image_url,$string_json);
+                //2
+                $string_json = str_replace("<message_id>",$event["message"]["id"],$string_json);
+                
+                //3
+                $string_json = str_replace("<content>","-",$string_json);
+                
+                //4
+                $numbers = join(",",json_decode($data["numbers"]));
+                if(empty($numbers)){ $numbers = "-";}
+                $string_json = str_replace("<numbers>",$numbers,$string_json); 
+                
+                $string_json = str_replace("<title>",$data["title"],$string_json); 
+                    
+                //5
+                $n = $data['title'];        
+                if(is_numeric($n)){            
+                    $levels = [$n-10,$n-5,$n+5,$n+10,$n-2,$n-4,$n-6,$n-8];
+                }else{
+                    $levels = ["-","-","-","-","-","-","-","-"];
+                }
+                $string_json = str_replace("<min0>",$levels[0],$string_json);
+                $string_json = str_replace("<min1>",$levels[1],$string_json);
+                $string_json = str_replace("<min2>",$levels[2],$string_json);
+                $string_json = str_replace("<min3>",$levels[3],$string_json);
+                $string_json = str_replace("<min4>",$levels[4],$string_json);
+                $string_json = str_replace("<min5>",$levels[5],$string_json);
+                $string_json = str_replace("<min6>",$levels[6],$string_json);
+                $string_json = str_replace("<min7>",$levels[7],$string_json);
+                
+                //6
+                $string_json = str_replace("<lineid>",$event["source"]["userId"],$string_json);
+                //7
+                $string_json = str_replace("<login>",$image_url,$string_json);
+                //8
+                $string_json = str_replace("<user_manual>",$image_url,$string_json);
+                //9
+                $string_json = str_replace("<msgocrid>",$event["message"]["id"],$string_json);
+                $message =  json_decode($string_json, true); 
+                break;
+            case "quickReply": 
+                $template_path = storage_path('../public/json/quick-reply.json');   
+                $string_json = file_get_contents($template_path);
+                $message = json_decode($string_json, true); 
+                break;
+        }        
 
         $body = [
             "replyToken" => $event["replyToken"],
@@ -321,7 +349,7 @@ class OcrController extends Controller
         //FINALLY REPLY TO USER                
         $channel_access_token = $this->channel_access_token;
         $event['message'] = ['id' => ''.$data['msgocrid'] ];
-        $this->replyToUser($new_data,$event, $channel_access_token);
+        $this->replyToUser($new_data,$event, $channel_access_token,"flex");
         
         
     }
