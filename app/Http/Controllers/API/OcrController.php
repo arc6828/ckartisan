@@ -138,7 +138,7 @@ class OcrController extends Controller
             "user_id" => 1,     //ASSUME
             "msglocid" => $event['message']['id'],
         ];
-        //$data["staffgaugeid"] = $this->findNearestStaffgauge($data);
+        $data["staffgaugeid"] = $this->findNearestStaffgauge($data);
         //CREATE LOCATION        
         $location = Location::create($data);    
         $data["location"] = $location;             
@@ -164,12 +164,12 @@ class OcrController extends Controller
             if($min_distance == null)
             {
                 $nearest_staffgauge_id = $item->id;
-                $min_distance = d;
+                $min_distance = $d;
             }
             else if($d < $min_distance )
             {
                 $nearest_staffgauge_id = $item->id;
-                $min_distance = d;
+                $min_distance = $d;
             }
         }
         return $nearest_staffgauge_id;
