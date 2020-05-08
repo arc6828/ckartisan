@@ -140,7 +140,8 @@ class OcrController extends Controller
         ];
 
         //CREATE LOCATION        
-        $ocr = Location::create($data);                     
+        $location = Location::create($data);    
+        $data["location"] = $location;             
 
         //FINALLY REPLY TO USER                
         $channel_access_token = $this->channel_access_token;
@@ -276,6 +277,7 @@ class OcrController extends Controller
                 $message =  json_decode($string_json, true); 
                 break;
             case "flex-location": 
+                $location = $data["location"];
                 $template_path = storage_path('../public/json/flexbubble-location-reply.json');   
                 $string_json = file_get_contents($template_path);                
                 //1
@@ -287,7 +289,9 @@ class OcrController extends Controller
                 //4
                 $string_json = str_replace("<longitude>",$data["longitude"],$string_json);
                 //5
-                $string_json = str_replace("<create_at>",date("Y-m-d h:i:sa"),$string_json);
+                $string_json = str_replace("<staffguage_name>",$location->staffgauge->addressgauge. "({$location->staffgauge->id})" ,$string_json);
+                //6
+                $string_json = str_replace("<created_at>",$location->created_at,$string_json);
                 $message = json_decode($string_json, true); 
                 break;
             case "quickReply": 
