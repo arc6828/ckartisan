@@ -26,7 +26,25 @@ class OcrController extends Controller
      */
     public function index()
     {        
-        //
+        //PREPARE DATA
+        $data = [
+            "address" => "......",
+            "latitude" => "13.96591547579",
+            "longitude" => "100.62308359891",
+            "typegroup" => "",
+            "lineid" => "",
+            "staffgaugeid" => 1, //ASSUME
+            "user_id" => 1,     //ASSUME
+            //"msglocid" => $event['message']['id'],
+        ];
+        $data["staffgaugeid"] = $this->findNearestStaffgauge($data);
+        //CREATE LOCATION        
+        //$location = Location::create($data);    
+        //$data["location"] = $location;             
+
+        //FINALLY REPLY TO USER                
+        //$channel_access_token = $this->channel_access_token;
+        //$this->replyToUser($data,$event, $channel_access_token,"flex-location");
     }
 
     /**
@@ -158,9 +176,12 @@ class OcrController extends Controller
 
         foreach($staffgauges as $item)
         {
-            $dLat = $item->latitude - $data["latitude"];
-            $dLon = $item->longitude - $data["longitude"];
+            $dLat = $item->latitudegauge - $data["latitude"];
+            //echo "<br> dLat : {$dLat} , {$item->latitudegauge} , {$data["latitude"]}";
+            $dLon = $item->longitudegauge - $data["longitude"];
+            //echo "<br> dLat : {$dLon} , {$item->longitudegauge} , {$data["longitude"]}";
             $d = sqrt($dLat*$dLat + $dLon*$dLon);
+
             if($min_distance == null)
             {
                 $nearest_staffgauge_id = $item->id;
@@ -171,6 +192,7 @@ class OcrController extends Controller
                 $nearest_staffgauge_id = $item->id;
                 $min_distance = $d;
             }
+            //echo "<br>Best : [{$nearest_staffgauge_id} , {$min_distance}] , Current : [{$item->id} , {$d}] ";
         }
         return $nearest_staffgauge_id;
     }
