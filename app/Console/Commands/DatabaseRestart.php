@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use App\Mylog;
+use App\MyLog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -42,7 +42,7 @@ class DatabaseRestart extends Command
     public function handle()
     {
         if (Schema::hasTable('my_logs')) {
-            Mylog::create([
+            MyLog::create([
                 "title" => "Mysql Restart",
                 "content" => "Mysql Restart by cronjob",
             ]);
