@@ -14,7 +14,8 @@
 //PUBLIC ROUTES 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+    //return view('welcome');
 });
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
@@ -22,6 +23,9 @@ Route::get('/fastwork/intro', function () {
     return view('fastwork/intro');
 });
 
+Route::get('/simulation', function () {
+    return view('simulation');
+});
 Route::resource('ocr', 'OcrController');
 Route::resource('fastwork-status', 'FastworkStatusController');
 

@@ -109,8 +109,11 @@
             </div>
 
             <div class="content">
-                <div class="title m-b-md">
+                <div class="title m-b-md d-none">
                     {{ config('app.name', 'Laravel') }}
+                </div>
+                <div class="title m-b-md">
+                    <img src="{{ url('images/logo-landscape.png') }}" width="50%">
                 </div>
 
                 <div class="links" style="display: none;">
@@ -123,7 +126,7 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
 
-                <div class="text-center">
+                <div class="text-center d-none">
                     <a class="btn btn-outline-primary" href="https://medium.com/ckartisan">Our blog</a>
                     <a class="btn btn-primary" href="{{ url('/') }}/fastwork">Fastwork</a>
                 </div>
