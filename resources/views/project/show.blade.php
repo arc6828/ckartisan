@@ -90,6 +90,7 @@
                         </div>
                 </div>
 
+                @if(Auth::user()->profile->role == "admin") 
                 <div class="card mt-4">
                     <div class="card-header">Income</div>
                     <div class="card-body">
@@ -156,6 +157,7 @@
 
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
