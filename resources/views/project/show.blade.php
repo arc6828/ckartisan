@@ -89,6 +89,73 @@
 
                         </div>
                 </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">Income</div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-lg">
+                                
+                            </div>
+                            <div class="col-lg text-right">
+                                <button class="mr-auto btn btn-warning btn-sm" disabled>
+                                    Total Income
+                                    <span class="badge badge-light">{{ $project->incomes->sum('total') }}</span>
+                                </button>
+                            </div>
+
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Total</th>
+                                        <th>Receipt</th><th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->incomes as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <div>
+                                                <a href="{{ url('/income/' . $item->id) }}" title="View Income">{{ $item->title }}</a>                                          
+                                                
+                                            </div>
+                                            <div>Project : {{ $item->project->title }}</div>
+                                            <div>ผู้รับเงิน : {{ $item->user->name }}</div>
+                                            <div>วันที่รับเงิน : {{ $item->paid_date }}</div>
+                                        </td>
+                                        <td>{{ number_format($item->total) }}</td>                                        
+                                        <td>
+                                            @if( isset($item->receipt) )
+                                                <a href="{{ url('storage') }}/{{ $item->receipt }}" target="_blank">
+                                                    <img src="{{ url('storage') }}/{{ $item->receipt }}"  width="70" />
+                                                </a>
+                                            @endif  
+                                        </td>
+                                        <td >
+                                            <a class="d-none"  href="{{ url('/income/' . $item->id) }}" title="View Income"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            <a href="{{ url('/income/' . $item->id . '/edit') }}" title="Edit Income"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+
+                                            <form method="POST" action="{{ url('/income' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
+                                                {{ method_field('DELETE') }}
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete Income" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
