@@ -28,16 +28,16 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
-        // $requestData = $request->all();        
-        // $requestData["date"] = $request->input("date","1");
-        // $requestData["month"] = $request->input("month","1");
-        // $requestData["year"] = $request->input("year","")<2500?$request->input("year",""):$request->input("year","")-543;        
+        $requestData = $request->all();        
+        $requestData["date"] = $request->input("date","1");
+        $requestData["month"] = $request->input("month","1");
+        $requestData["year"] = $request->input("year","")<2500?$request->input("year",""):$request->input("year","")-543;        
 
-        // $publication = Publication::create($requestData);
-        // return $publication;
+        $publication = Publication::create($requestData);
+        return $publication;
 
         
-        return [];
+        // return [];
     }
 
     /**
