@@ -15,11 +15,8 @@ class PublicationController extends Controller
      */
     public function index(Request $request)
     {
-        // $authors =  $request->input("authors","");
-        // $year =  $request->input("year","");
 
-        $publications  = Publication::get();    
-            
+        $publications  = Publication::get();                
         return $publications;
     }
 
@@ -31,7 +28,13 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $requestData = $request->all();        
+        $requestData["date"] = $request->input("date","1");
+        $requestData["month"] = $request->input("month","1");
+        $requestData["year"] = $request->input("year","")<2500?$request->input("year",""):$request->input("year","")-543;        
+
+        $publication = Publication::create($requestData);
+        return $publication;
     }
 
     /**
@@ -42,7 +45,8 @@ class PublicationController extends Controller
      */
     public function show($id)
     {
-        //
+        $publication = Fastwork::findOrFail($id);
+        return $publication;
     }
 
     /**
@@ -54,7 +58,10 @@ class PublicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $requestData = $request->all();       
+        $publication = Publication::findOrFail($id);
+        $publication->update($requestData);
+        return $publication;
     }
 
     /**
@@ -65,6 +72,10 @@ class PublicationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Publication::destroy($id);        
+        return [
+            "id"=> $id,
+            "status" => "deleted"
+        ];
     }
 }
