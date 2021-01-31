@@ -1,4 +1,6 @@
- @include('publication.header')
+@extends('layouts.app')
+
+@section('content')
 <div class="container">
 
   <div class="card">
@@ -23,5 +25,5 @@
       </form>
     </div>
   </div>
-</div> 
-@include('publication.footer')
+</div>
+@endsection
