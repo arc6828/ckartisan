@@ -28,6 +28,7 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
+
         $requestData = $request->all();        
         $requestData["date"] = $request->input("date","1");
         $requestData["month"] = $request->input("month","1");
@@ -48,7 +49,7 @@ class PublicationController extends Controller
      */
     public function show($id)
     {
-        $publication = Fastwork::findOrFail($id);
+        $publication = Publication::findOrFail($id);
         return $publication;
     }
 
