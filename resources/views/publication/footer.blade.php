@@ -127,7 +127,6 @@
 
     <!--script src="https://kit.fontawesome.com/d59a8a2721.js"></script-->
     <!--script src="js/main.js"></script-->
-    <?php include("layouts/main-js.php"); ?>
 
     <!-- Load Facebook SDK for JavaScript -->
     <?php if(true) { ?>
